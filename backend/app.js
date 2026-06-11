@@ -7,10 +7,8 @@ const exploreRouter = require('./routes/explore')
 const createRouter = require('./routes/create')
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
-app.use(cors());
-app.use(cors({
-  origin: 'http://localhost:5173'
-}));
+const allowedOrigin = ['http://localhost:5173','https://quizora-tammy.netlify.app/']
+app.use(cors(allowedOrigin));
 app.use('/dashboard', userRouter);
 app.use('/quiz', quizRouter );
 app.use('/explore', exploreRouter);

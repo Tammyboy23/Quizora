@@ -17,7 +17,7 @@ function Explore() {
   }, []);
 
   const refresh = () => {
-    window.reload();
+    window.location.reload();
   }
   return (
     <div className="explore">
@@ -33,7 +33,7 @@ function Explore() {
         {quizy.length === 0 ? (
           <div className="empty">
             <p className="empty">No Quiz Available</p>
-          <button onClick={refresh}>Refresh <LuRefreshCcw /></button>
+          <button className="refresh" onClick={refresh}>Refresh <LuRefreshCcw /></button>
           </div>
           
         ) : (

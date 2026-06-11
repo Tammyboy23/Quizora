@@ -2482,3 +2482,13 @@ body{
     z-index: 5;
   }
 }
+/**REFRESH BUTTON**/
+.refresh{
+  padding: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-family: outfit, sans-serif;
+  border: none;
+  margin-top: 10px;
+  border-radius: 12px;
+}
