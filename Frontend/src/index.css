@@ -2492,3 +2492,14 @@ body{
   margin-top: 10px;
   border-radius: 12px;
 }
+.soon{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: outfit, sans-serif;
+  gap: 20px;
+}
+.soon p{
+  font-size: 3.3rem;
+  color: rgb(255, 115, 0);
+}

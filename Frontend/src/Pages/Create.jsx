@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaPlaneArrival, FaPlaneCircleCheck } from "react-icons/fa6";
-import { LuArrowLeft, LuBookPlus } from "react-icons/lu";
+import { LuArrowLeft, LuBookPlus, LuMailWarning, LuMessageCircleWarning } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
 function Create() {
@@ -114,6 +114,11 @@ function Create() {
                                 </div>
                             ) : (
                                 <div className="pd">
+                                    <div className="soon">
+                                        <h1>This Feature is under maintenance</h1>
+                                        <p><LuMessageCircleWarning /></p>
+                                    </div>
+                                    {/**
                                     <h3>PDF MODE</h3>
                                     <input
                                         type="text"
@@ -157,7 +162,7 @@ function Create() {
                                                 Create <LuBookPlus />
                                             </p>
                                         )}
-                                    </button>
+                                    </button> */}
                                 </div>
                             )}
                         </div>
