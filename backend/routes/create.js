@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 require("dotenv").config();
+const { GoogleGenAI } = require("@google/genai");
 const { quizes } = require("../data");
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 function extractJson(text) {
   if (!text) return null;
@@ -13,7 +18,7 @@ function extractJson(text) {
   return JSON.parse(candidate);
 }
 
-function normalizeQuiz(aiQuiz, fallbackTitle, fallbackNumber) {
+function normalizeQuiz(aiQuiz, fallbackTitle) {
   if (!aiQuiz || typeof aiQuiz !== "object") {
     throw new Error("AI response was not a valid quiz object");
   }
@@ -23,6 +28,7 @@ function normalizeQuiz(aiQuiz, fallbackTitle, fallbackNumber) {
 
   const normalizedQueue = queue.map((item) => {
     const rawOptions = item?.options;
+
     const options = Array.isArray(rawOptions)
       ? rawOptions
       : rawOptions && typeof rawOptions === "object"
@@ -36,18 +42,26 @@ function normalizeQuiz(aiQuiz, fallbackTitle, fallbackNumber) {
     };
   });
 
+  // Convert AI keyword → real icon URL
+  const iconKeyword = aiQuiz.imgKeyword || topicTitle;
+
+  const imgUrl = `https://img.icons8.com/ios-filled/512/${encodeURIComponent(
+    iconKeyword.toLowerCase().replace(/\s+/g, "-")
+  )}.png`;
+
   return {
     title: topicTitle,
     name: aiQuiz.name || topicTitle,
-    id: Number(aiQuiz.id) || Date.now() + Math.floor(Math.random() * 1000),
+    id: Date.now() + Math.floor(Math.random() * 1000),
     desc: aiQuiz.desc || `Quiz about ${topicTitle}`,
-    img: aiQuiz.img || "https://cdn-icons-png.flaticon.com/512/184/184615.png",
+    img: imgUrl,
     queue: normalizedQueue,
   };
 }
 
 router.post("/", async (req, res) => {
   const { title, number } = req.body;
+
   const topic = String(title);
   const questionCount = Number(number);
 
@@ -60,66 +74,56 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY || process.env.GROQ_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
-        temperature: 0.7,
-        messages: [
-          {
-            role: "user",
-            content: `Create a multiple-choice quiz on the topic: ${topic}.
+    const prompt = `
+Create a multiple-choice quiz on the topic: ${topic}.
 
 Requirements:
 - Number of questions: ${questionCount}
 - Each question must have 4 options
 - Only one correct answer per question
-- Questions should be clear, accurate, and educational
-- Make it suitable for students preparing for exams if applicable
--Make sure to make the questions different and not the exact same when asked for it another time
+- Make questions clear, educational, and exam-ready
 
-Return ONLY valid JSON in this exact structure:
+Return ONLY valid JSON in this structure:
+
 {
   "title": "Quiz title",
   "name": "Quiz title",
-  "id": ${crypto.randomUUID()},
+  "id": ${Date.now()},
   "desc": "A short description",
-  "img": "a link to an image or icon that matchs the topic",
-  "id": 123456,
-  "desc": "A short description",
-  "img": "A link to a image that can represnet the topic",
+  "imgKeyword": "a short keyword representing the topic icon (e.g. 'physics', 'chemistry', 'biology')",
   "queue": [
     {
       "question": "Question text",
-      "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
-      "answer": "The exact correct option text"
+      "options": ["A", "B", "C", "D"],
+      "answer": "Correct option"
     }
   ]
-}`.trim(),
-          },
-        ],
-      }),
+}
+`.trim();
+
+    const response = await ai.models.generateContent({
+      model: "gemini-3.5-flash",
+      contents: prompt,
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      return res.status(response.status).json({ error: errorText });
-    }
-
-    const data = await response.json();
-    const message = data.choices?.[0]?.message?.content ?? "";
+    const message = response.text || "";
     const parsed = extractJson(message);
-    const aiQuiz = normalizeQuiz(parsed, topic, questionCount);
+
+    const aiQuiz = normalizeQuiz(parsed, topic);
 
     quizes.push(aiQuiz);
-    return res.json({ success: true, quiz: aiQuiz, quizes });
+
+    return res.json({
+      success: true,
+      quiz: aiQuiz,
+      quizes,
+    });
   } catch (error) {
-    console.error("Groq API error:", error);
-    return res.status(500).json({ error: "Failed to fetch response from Groq API" });
+    console.error("Gemini API error:", error);
+    return res.status(500).json({
+  error: "Gemini API failed",
+  details: error?.message,
+});
   }
 });
 
