@@ -43,7 +43,7 @@ function Explore() {
                   </div>
                   <span className="quizy-count">
                     <LuFileStack />
-                    {quiz.length} Qs
+                    {quiz.queue.length} Qs
                   </span>
                 </div>
 

@@ -48,11 +48,7 @@ function normalizeQuiz(aiQuiz, fallbackTitle, fallbackNumber) {
 
 router.post("/", async (req, res) => {
   const { title, number } = req.body;
-<<<<<<< HEAD
   const topic = String(title);
-=======
-  const topic = String(title || "").trim();
->>>>>>> 598444c (AI quiz creation implemented)
   const questionCount = Number(number);
 
   if (!topic) {
@@ -89,15 +85,12 @@ Return ONLY valid JSON in this exact structure:
 {
   "title": "Quiz title",
   "name": "Quiz title",
-<<<<<<< HEAD
   "id": ${crypto.randomUUID()},
   "desc": "A short description",
   "img": "a link to an image or icon that matchs the topic",
-=======
   "id": 123456,
   "desc": "A short description",
   "img": "https://example.com/icon.png",
->>>>>>> 598444c (AI quiz creation implemented)
   "queue": [
     {
       "question": "Question text",
