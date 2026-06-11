@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaArrowRightSolid } from "react-icons/lia";
-import { LuFileStack } from "react-icons/lu";
+import { LuFileStack, LuRefreshCcw } from "react-icons/lu";
 
 function Explore() {
   const [quizy, setquizy] = useState([]);
 
   useEffect(() => {
-    fetch("https://quizora-r3li.onrender.com//explore")
+    fetch("https://quizora-r3li.onrender.com/explore")
       .then((res) => res.json())
       .then((data) => {
         const list = Array.isArray(data) ? data : Array.isArray(data?.quizes) ? data.quizes : [];
@@ -16,6 +16,9 @@ function Explore() {
       .catch(() => setquizy([]));
   }, []);
 
+  const refresh = () => {
+    window.reload();
+  }
   return (
     <div className="explore">
       <div className="explore-header">
@@ -28,7 +31,11 @@ function Explore() {
 
       <div className="quizes">
         {quizy.length === 0 ? (
-          <p className="empty">No Quiz Available</p>
+          <div className="empty">
+            <p className="empty">No Quiz Available</p>
+          <button onClick={refresh}>Refresh <LuRefreshCcw /></button>
+          </div>
+          
         ) : (
           quizy.map((quiz, i) => (
             <div
