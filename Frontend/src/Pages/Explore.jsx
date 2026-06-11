@@ -7,7 +7,7 @@ function Explore() {
   const [quizy, setquizy] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/explore")
+    fetch("https://quizora-r3li.onrender.com//explore")
       .then((res) => res.json())
       .then((data) => {
         const list = Array.isArray(data) ? data : Array.isArray(data?.quizes) ? data.quizes : [];

@@ -33,7 +33,7 @@ function Page({ onQuizModeChange }) {
     let mounted = true;
 
     setLoading(true);
-    fetch(`http://localhost:3000/quiz/${id}`, {
+    fetch(`https://quizora-r3li.onrender.com//quiz/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

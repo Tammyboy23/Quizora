@@ -33,7 +33,7 @@ function Create() {
         setErrorMessage("");
 
         try {
-            const response = await fetch("http://localhost:3000/create", {
+            const response = await fetch("https://quizora-r3li.onrender.com//create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
