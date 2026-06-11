@@ -80,6 +80,7 @@ Requirements:
 - Only one correct answer per question
 - Questions should be clear, accurate, and educational
 - Make it suitable for students preparing for exams if applicable
+-Make sure to make the questions different and not the exact same when asked for it another time
 
 Return ONLY valid JSON in this exact structure:
 {
@@ -90,7 +91,7 @@ Return ONLY valid JSON in this exact structure:
   "img": "a link to an image or icon that matchs the topic",
   "id": 123456,
   "desc": "A short description",
-  "img": "https://example.com/icon.png",
+  "img": "A link to a image that can represnet the topic",
   "queue": [
     {
       "question": "Question text",
