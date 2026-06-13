@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { FaPlaneArrival, FaPlaneCircleCheck } from "react-icons/fa6";
-import { LuArrowLeft, LuBookPlus, LuMailWarning, LuMessageCircleWarning } from "react-icons/lu";
+import { FaFaceAngry, FaRegFaceMeh, FaStar } from "react-icons/fa6";
+import {  LuBookPlus, LuMessageCircleWarning, LuSmile, LuStar } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
 function Create() {
-    const [mode, setmode] = useState("");
+    const [mode, setmode] = useState("Text");
     const [number, setnumber] = useState(5);
     const [selectedFile, setSelectedFile] = useState(null);
     const [title, setTitle] = useState("");
     const [loading, setloading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [difficulty, setdifficulty] = useState("easy")
     const navigate = useNavigate();
 
     const handleFileChange = (e) => {
@@ -38,7 +39,7 @@ function Create() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ title: trimmedTitle, number }),
+                body: JSON.stringify({ title: trimmedTitle, number , difficulty}),
             });
 
             const result = await response.json();
@@ -61,23 +62,21 @@ function Create() {
         <>
             <div className="create">
                 <div className="create-box">
-                    {mode === "" ? (
-                        <div className="first">
+                    <div className="first">
                             <div className="create-top">
                                 <h1>Create Quiz</h1>
                                 <p>Create your own quiz your customizable way to success</p>
                             </div>
-                            <select value={mode} onChange={(e) => setmode(e.target.value)}>
-                                <option value="">Select Mode</option>
-                                <option value="Text">Written Mode</option>
-                                <option value="Pdf">Pdf Mode</option>
-                            </select>
+                            <div className="create-nav">
+                                <button  style={{
+                                    background: mode == "Text"? "#65659e" : "transparent"
+                                }} onClick={() => setmode("Text")}>Text</button>
+                                <button style={{
+                                    background: mode == "PDF"? "#65659e" : "transparent"
+                                }} onClick={() => setmode("PDF")}>PDF</button>
+                            </div>
                         </div>
-                    ) : (
                         <div className="second">
-                            <button onClick={() => setmode("")} className="back">
-                                <LuArrowLeft />Back
-                            </button>
                             {mode === "Text" ? (
                                 <div className="written">
                                     <h3>Written Mode</h3>
@@ -88,6 +87,18 @@ function Create() {
                                         onChange={(e) => setTitle(e.target.value)}
                                     />
                                     {errorMessage && <p className="create-error">{errorMessage}</p>}
+                                    <label htmlFor="">Difficulty</label>
+                                    <div className="diff">
+                                        <button style={{
+                                            background: difficulty == "easy" ? "rgb(27, 216, 27)" : "transparent"
+                                        }} onClick={() => setdifficulty("easy")}>Easy <LuSmile /></button>
+                                        <button style={{
+                                            background: difficulty == "Medium" ? "orange" : "transparent"
+                                        }} onClick={() => setdifficulty("Medium")}>Medium <FaRegFaceMeh /></button>
+                                        <button style={{
+                                            background: difficulty == "Hard" ? "red" : "transparent"
+                                        }} onClick={() => setdifficulty("Hard")}>Hard <FaFaceAngry /></button>
+                                    </div>
                                     <label htmlFor="">Number of Questions</label>
                                     <div className="range">
                                         <span>{number}</span>
@@ -107,7 +118,7 @@ function Create() {
                                             </p>
                                         ) : (
                                             <p>
-                                                Create <LuBookPlus />
+                                                Generate Quiz <FaStar />
                                             </p>
                                         )}
                                     </button>
@@ -166,7 +177,7 @@ function Create() {
                                 </div>
                             )}
                         </div>
-                    )}
+    
                 </div>
             </div>
         </>

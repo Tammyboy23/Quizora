@@ -60,7 +60,7 @@ function normalizeQuiz(aiQuiz, fallbackTitle) {
 }
 
 router.post("/", async (req, res) => {
-  const { title, number } = req.body;
+  const { title, number, difficulty} = req.body;
 
   const topic = String(title);
   const questionCount = Number(number);
@@ -82,6 +82,7 @@ Requirements:
 - Each question must have 4 options
 - Only one correct answer per question
 - Make questions clear, educational, and exam-ready
+- Level of difficulty should be : ${difficulty}
 
 Return ONLY valid JSON in this structure:
 
