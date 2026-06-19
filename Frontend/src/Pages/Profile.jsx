@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import Top from "./top";
+import toast from "react-hot-toast";
 
 function Profile() {
   const [username, setUsername] = useState(localStorage.getItem("username") || "Anonymous");
@@ -20,7 +20,8 @@ function Profile() {
 
   function showSaved(msg = "Changes saved") {
     setSaveMsg(msg);
-    setTimeout(() => setSaveMsg(""), 2200);
+    setTimeout(() => setSaveMsg(""), 2200)
+    toast.success("Changed Saved");
   }
 
   function startEdit(key, currentVal) {

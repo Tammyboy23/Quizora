@@ -1,6 +1,6 @@
 import {  AiFillFire } from "react-icons/ai";
 import Top from "./top";
-import {  FaChartLine, FaTrophy } from "react-icons/fa";
+import {  FaChartLine, FaStackExchange, FaTrophy } from "react-icons/fa";
 import { FaMagnifyingGlass, FaStopwatch } from "react-icons/fa6";
 import { LuBell, LuBellDot } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
@@ -65,12 +65,10 @@ function Home(){
        
         <Top/>
         <div className="home">
-        <div className="title">
-        <span className="icon">< FaMagnifyingGlass /></span>
-        <input type="search" placeholder="Search quizzes or topics..." />
-      </div>
         <div className="dashboards">
-            <div className="board">
+            <div className="board" style={{
+                borderTop: '4px solid blue'
+            }}>
                 <div className="board-top"><h3>Average</h3><span style={{
                     background: 'hsl(205, 14%, 53%)',
                 }}><FaChartLine size="20" color="blue" /></span></div>
@@ -78,19 +76,25 @@ function Home(){
                     color: average > 80 ? 'green' : average > 50 ? 'orange' :  average > 30 ? 'yellow' : 'red',
                 }}>{average}%</h1>
             </div>
-            <div className="board">
+            <div className="board" style={{
+                borderTop: '4px solid red'
+            }}>
                 <div className="board-top"><h3>Streaks</h3> <span style={{
                     background: 'hsl(0, 12%, 48%)',
                 }}><AiFillFire  size="20" color="red"/></span></div>
                 <h1>2 Days</h1>
             </div>
-            <div className="board">
-                <div className="board-top"><h3>Duration</h3><span style={{
+            <div className="board" style={{
+                borderTop: `4px solid hsl(150, 100%, 47%)`
+            }}>
+                <div className="board-top"><h3>Quizes Taken</h3><span style={{
                     background: 'hsl(120, 11%, 44%)',
-                }}><FaStopwatch size="20" color="hsl(150, 100%, 47%)"/> </span></div>
-                <h1>10s</h1>
+                }}><FaStackExchange size="20" color="hsl(150, 100%, 47%)"/> </span></div>
+                <h1>10 Qz</h1>
             </div>
-            <div className="board">
+            <div className="board" style={{
+                borderTop: '4px solid orange'
+            }}>
                 <div className="board-top">
                     <h3>Rankings</h3>
                     <span style={{

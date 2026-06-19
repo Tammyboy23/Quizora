@@ -33,6 +33,13 @@ function Top() {
       <div className="greet">
             <p>GOOD {time}</p>
             <h2>{ location.pathname === '/explore' ? "Hello": "Welcome"} {user || "Guest"} 👋 </h2>
+            <p style={{
+              background: `rgb(46, 46, 46)`,
+              padding: '10px 20px',
+              width: 'fit-content',
+              borderRadius: '40px',
+              color: '#fff',
+            }}>{new Date().toLocaleDateString('en-NG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'})}</p>
         </div>
 
       <div className="side">

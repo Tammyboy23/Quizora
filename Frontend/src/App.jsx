@@ -7,6 +7,7 @@ import Explore from "./Pages/Explore";
 import Sign from "./Pages/SignUp";
 import Profile from "./Pages/Profile";
 import Create from "./Pages/Create";
+import { Toaster } from "react-hot-toast";
 
 function App(){
     const [hideNav, setHideNav] = useState(false);
@@ -17,6 +18,7 @@ function App(){
         <div className="layout">
         <NavBar hidden={hideNav} />
         <main className="content">
+            <Toaster />
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/explore" element={<Explore/>}/>
