@@ -67,41 +67,51 @@ function Home(){
         <div className="home">
         <div className="dashboards">
             <div className="board" style={{
-                borderTop: '4px solid blue'
+                border: '2px solid #4d4d4f43',
+                borderTop: '2px solid #6c63ff',
             }}>
                 <div className="board-top"><h3>Average</h3><span style={{
-                    background: 'hsl(205, 14%, 53%)',
-                }}><FaChartLine size="20" color="blue" /></span></div>
+                    background: '#22213d',
+                }}><FaChartLine size="20" color="#6c63ff" /></span></div>
                 <h1 style={{
-                    color: average > 80 ? 'green' : average > 50 ? 'orange' :  average > 30 ? 'yellow' : 'red',
+                    color: '#6c63ff',
                 }}>{average}%</h1>
             </div>
             <div className="board" style={{
-                borderTop: '4px solid red'
+                border: '2px solid #4d4d4f43',
+                borderTop: '2px solid #f87171'
             }}>
                 <div className="board-top"><h3>Streaks</h3> <span style={{
-                    background: 'hsl(0, 12%, 48%)',
-                }}><AiFillFire  size="20" color="red"/></span></div>
-                <h1>2 Days</h1>
+                    background: '#32222a',
+                }}><AiFillFire  size="20" color="#f87171"/></span></div>
+                <h1 style={{
+                    color: '#f87171',
+                }}>2 Days</h1>
             </div>
             <div className="board" style={{
-                borderTop: `4px solid hsl(150, 100%, 47%)`
+                border: '2px solid #4d4d4f43',
+                borderTop: `2px solid hsl(150, 100%, 47%)`
             }}>
                 <div className="board-top"><h3>Quizes Taken</h3><span style={{
-                    background: 'hsl(120, 11%, 44%)',
+                    background: '#182c2c',
                 }}><FaStackExchange size="20" color="hsl(150, 100%, 47%)"/> </span></div>
-                <h1>10 Qz</h1>
+                <h1 style={{
+                    color: 'hsl(150, 100%, 47%)',
+                }}>10 Qz</h1>
             </div>
             <div className="board" style={{
-                borderTop: '4px solid orange'
+                border: '2px solid #4d4d4f43',
+                borderTop: '2px solid orange'
             }}>
                 <div className="board-top">
                     <h3>Rankings</h3>
                     <span style={{
-                        background: '#91907b',
+                        background: '#332b1f',
                     }}><FaTrophy  size="20" color="orange"/></span>
                 </div>
-                <h1>#1</h1>
+                <h1 style={{
+                    color: 'orange',
+                }}>#1</h1>
             </div>
         </div>
         </div>

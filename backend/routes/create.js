@@ -1,12 +1,7 @@
 const express = require("express");
 const router = express.Router();
 require("dotenv").config();
-const { GoogleGenAI } = require("@google/genai");
 const { quizes } = require("../data");
-
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-});
 
 function extractJson(text) {
   if (!text) return null;
@@ -14,6 +9,13 @@ function extractJson(text) {
   const trimmed = text.trim();
   const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
   const candidate = fenced ? fenced[1].trim() : trimmed;
+
+  const start = candidate.indexOf("{");
+  const end = candidate.lastIndexOf("}");
+
+  if (start !== -1 && end !== -1 && end > start) {
+    return JSON.parse(candidate.slice(start, end + 1));
+  }
 
   return JSON.parse(candidate);
 }
@@ -42,7 +44,6 @@ function normalizeQuiz(aiQuiz, fallbackTitle) {
     };
   });
 
-  // Convert AI keyword → real icon URL
   const iconKeyword = aiQuiz.imgKeyword || topicTitle;
 
   const imgUrl = `https://img.icons8.com/ios-filled/512/${encodeURIComponent(
@@ -56,13 +57,14 @@ function normalizeQuiz(aiQuiz, fallbackTitle) {
     desc: aiQuiz.desc || `Quiz about ${topicTitle}`,
     img: imgUrl,
     queue: normalizedQueue,
+    note: aiQuiz.note || "",
   };
 }
 
 router.post("/", async (req, res) => {
-  const { title, number, difficulty} = req.body;
+  const { title, number, difficulty } = req.body;
 
-  const topic = String(title);
+  const topic = String(title || "").trim();
   const questionCount = Number(number);
 
   if (!topic) {
@@ -73,8 +75,11 @@ router.post("/", async (req, res) => {
     return res.status(400).json({ error: "number must be a positive integer" });
   }
 
-  try {
-    const prompt = `
+  if (!process.env.GROQ_API_KEY) {
+    return res.status(500).json({ error: "GROQ_API_KEY is not configured" });
+  }
+
+  const prompt = `
 Create a multiple-choice quiz on the topic: ${topic}.
 
 Requirements:
@@ -82,33 +87,52 @@ Requirements:
 - Each question must have 4 options
 - Only one correct answer per question
 - Make questions clear, educational, and exam-ready
-- Level of difficulty should be : ${difficulty}
+- Difficulty: ${difficulty || "medium"}
 
-Return ONLY valid JSON in this structure:
+Return ONLY valid JSON in this exact structure, with no extra commentary:
 
 {
   "title": "Quiz title",
   "name": "Quiz title",
-  "id": ${Date.now()},
   "desc": "A short description",
-  "imgKeyword": "a short keyword representing the topic icon (e.g. 'physics', 'chemistry', 'biology')",
+  "imgKeyword": "a short keyword representing the topic icon",
   "queue": [
     {
       "question": "Question text",
       "options": ["A", "B", "C", "D"],
       "answer": "Correct option"
     }
-  ]
+  ],
+  "note": "A long and detailed note on ${topic} that helps the user understand the topic and answer the questions. It should be long, detailed, and explanatory, but not repeat the quiz questions."
 }
 `.trim();
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
-      contents: prompt,
+  try {
+    const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + process.env.GROQ_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
+      }),
     });
 
-    const message = response.text || "";
-    const parsed = extractJson(message);
+    const data = await groqRes.json();
+
+    if (data.error) {
+      console.error("Groq API error:", data.error);
+      return res.status(502).json({
+        error: "Groq API failed",
+        details: data.error?.message,
+      });
+    }
+
+    const responseText = data.choices?.[0]?.message?.content || "";
+    const parsed = extractJson(responseText);
 
     const aiQuiz = normalizeQuiz(parsed, topic);
 
@@ -120,11 +144,11 @@ Return ONLY valid JSON in this structure:
       quizes,
     });
   } catch (error) {
-    console.error("Gemini API error:", error);
+    console.error("Groq API error:", error);
     return res.status(500).json({
-  error: "Gemini API failed",
-  details: error?.message,
-});
+      error: "Groq API failed",
+      details: error?.message,
+    });
   }
 });
 

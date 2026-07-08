@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import {  FaUser, FaQq } from "react-icons/fa";
-import { LuCompass,  LuX, LuMenu , LuFilePenLine} from "react-icons/lu";
+import { LuCompass,  LuX, LuMenu , LuFilePenLine, LuBellPlus, LuBookPlus, LuCirclePlus, LuLogOut} from "react-icons/lu";
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineBulb } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
@@ -44,7 +44,7 @@ function NavBar({ hidden }) {
     <div className="list">
       <NavLink to="/" onClick={() => setOpen(false)} className={ location.pathname ==='/' ? "list-active" : "list-a"}><MdDashboard /> Dashboard</ NavLink>
       <NavLink to="/explore" onClick={() => setOpen(false)} className={ location.pathname ==='/explore' ? "list-active" : "list-a"}><LuCompass /> Explore</NavLink>
-      <NavLink to="/create" onClick={() => setOpen(false)} className={ location.pathname ==='/create' ? "list-active" : "list-a"}><LuFilePenLine /> Create Quiz</NavLink>
+      <NavLink to="/create" onClick={() => setOpen(false)} className={ location.pathname ==='/create' ? "list-active" : "list-a"}><LuCirclePlus /> Create</NavLink>
       <NavLink to="/profile" onClick={() => setOpen(false)} className={ location.pathname ==='/profile' ? "list-active" : "list-a"}><FaUser /> Profile</NavLink>
     </div>
   );
@@ -67,7 +67,7 @@ function NavBar({ hidden }) {
           </button>
         </div>
         {navLinks}
-        <button onClick={logout} className="logout-btn">Logout</button>
+        <button onClick={logout} className="logout-btn">Logout <LuLogOut /> </button>
       </div>
 
       <div className="nav">
@@ -75,7 +75,7 @@ function NavBar({ hidden }) {
           <h1><FaQq /> QUIZORA</h1>
         </div>
         {navLinks}
-        <button onClick={logout}>Logout</button>
+        <button onClick={logout}>Logout  <LuLogOut /></button>
       </div>
     </>
   );

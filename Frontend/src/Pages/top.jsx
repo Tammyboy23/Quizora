@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 
 function Top() {
-  const greets = ["MORNING", "AFTERNOON", "EVENING"];
+  const greets = ["Morning", "Afternoon", "Evening"];
   const [time, settime] = useState("")
   const [loggedIn] = useState(localStorage.getItem("islogedin") === "true");
   const avatar = localStorage.getItem("avatar");
@@ -31,14 +31,15 @@ function Top() {
   return (
     <div className="tops">
       <div className="greet">
-            <p>GOOD {time}</p>
-            <h2>{ location.pathname === '/explore' ? "Hello": "Welcome"} {user || "Guest"} 👋 </h2>
+            <h2> Good {time},  {user || "Guest"} </h2>
             <p style={{
-              background: `rgb(46, 46, 46)`,
-              padding: '10px 20px',
+              background: `rgb(29, 20, 63)`,
+              border: '1px solid var(--accent)',
+              padding: '10px 20px ',
               width: 'fit-content',
               borderRadius: '40px',
-              color: '#fff',
+              color: '#7b7a7a',
+              fontSize: '0.8rem'
             }}>{new Date().toLocaleDateString('en-NG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'})}</p>
         </div>
 
