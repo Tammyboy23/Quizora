@@ -1,6 +1,8 @@
 // filepath: c:\Users\Tamilore\Documents\Projects\Quiz App\Frontend\src\Pages\Page.jsx
 import { useState, useEffect, useRef } from "react";
+import { LuFileWarning, LuMessageCircleWarning, LuTriangleAlert } from "react-icons/lu";
 import { useParams } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 
 function Page({ onQuizModeChange }) {
   const [quiz, setQuiz] = useState({ title: "", id: null, queue: [] });
@@ -135,7 +137,7 @@ function Page({ onQuizModeChange }) {
     return (
       <div className="app">
         <div className="screen">
-          <h2>Loading Quiz...</h2>
+          <h2>Loading Quiz <ScaleLoader color="#bd4dfe" size={30}/></h2>
           <div className="quiz-stats">Fetching questions from the server.</div>
         </div>
       </div>
@@ -146,7 +148,7 @@ function Page({ onQuizModeChange }) {
     return (
       <div className="app">
         <div className="screen">
-          <h2>Quiz Not Found ❌</h2>
+          <h2>Quiz Not Found <br /> <LuTriangleAlert color="red"/></h2>
           <div className="quiz-stats">The quiz you're looking for doesn't exist.</div>
         </div>
       </div>

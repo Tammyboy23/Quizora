@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LuEye, LuEyeOff, LuMail, LuUser, LuLock } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import {signUp, signIn, signInWithGoogle, logOut, watchAuthState} from "../config/auth"
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 48 48">
     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -25,38 +25,36 @@ function Sign() {
     setEmail(""); setPassword(""); setUsername(""); setShowPw(false);
   }
 
-  function signup() {
-    if (!username || !email || !password) return toast.error("Fill in all fields");
-    localStorage.setItem("islogedin", "true");
-    fetch("http://localhost:3000/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, username }),
-    })
-      .then((r) => r.json())
-      .then(() => { toast.success("Account created!"); navigate("/"); })
-      .catch(() => toast.error("Something went wrong"));
+  const signup = async() => {
+    try{
+      await signUp(email, password);
+      toast.success("Account Created");
+      navigate('/')
+
+    }
+    catch(err){
+      console.error(`Error: ${err}`);
+      toast.error(`${err}`);
+    }
+    
   }
 
-  function login() {
-    if (!email || !password) return toast.error("Fill in all fields");
-    fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.success) { localStorage.setItem("islogedin", "true"); navigate("/"); }
-        else toast.error(data.message || "Invalid credentials");
-      })
-      .catch(() => toast.error("Something went wrong"));
+  const login = async() => {
+    try{
+      await signIn(email, password);
+      toast.success("Logged In Successfully")
+      navigate('/')
+    }
+    catch(err){
+      console.error(`Error: ${err}`)
+      toast.error(`${err}`);
+    }
+    
   }
 
-  function googleAuth() {
-    // Wire up your Firebase/Supabase Google OAuth here
-    // e.g. signInWithPopup(auth, new GoogleAuthProvider())
-    toast("Google auth — wire up your provider!");
+  const googleAuth = async() => {
+    await signInWithGoogle();
+    navigate('/')
   }
 
   return (

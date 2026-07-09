@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
   const questionCount = Number(number);
 
   if (!topic) {
-    return res.status(400).json({ error: "title is required" });
+    return res.status(400).json({ error: "Title is required" });
   }
 
   if (!Number.isInteger(questionCount) || questionCount < 1) {
@@ -76,10 +76,10 @@ router.post("/", async (req, res) => {
   }
 
   if (!process.env.GROQ_API_KEY) {
-    return res.status(500).json({ error: "GROQ_API_KEY is not configured" });
+    return res.status(500).json({ error: "AI is Malfunctioning" });
   }
 
-  const prompt = `
+ const prompt = `
 Create a multiple-choice quiz on the topic: ${topic}.
 
 Requirements:
@@ -88,6 +88,37 @@ Requirements:
 - Only one correct answer per question
 - Make questions clear, educational, and exam-ready
 - Difficulty: ${difficulty || "medium"}
+
+For the "note" field, write a comprehensive, textbook-style study guide on ${topic}.
+This must be LONG and IN-DEPTH — aim for 1500-2000 words minimum. Do not write a short summary.
+
+Structure it with these Markdown sections, each fully developed with multiple paragraphs (not just one or two sentences per section):
+
+## Introduction
+Explain what ${topic} is, its background/context, and why it matters. 2-3 paragraphs.
+
+## Core Concepts
+Break down every major concept, term, and idea related to ${topic} in detail. Use ### subheadings for each distinct concept. Explain each one thoroughly as if teaching someone encountering it for the first time — don't just define terms, explain how and why they work, with reasoning.
+
+## Examples and Applications
+Give concrete, worked examples. If the topic involves calculations, formulas, or quantitative reasoning, show step-by-step worked examples using LaTeX (inline math like $x^2$, block equations like $$E = mc^2$$ on their own line).
+
+## Comparisons or Key Facts
+Where relevant, include a Markdown table comparing related concepts, categories, timelines, or values.
+
+## Common Misconceptions or Pitfalls
+Point out things learners often get wrong or confuse, and clarify them.
+
+## Key Takeaways
+A bullet list summarizing the most essential points from the entire guide.
+
+Formatting rules:
+- Use ## and ### Markdown headings exactly as structured above
+- Use bullet points/numbered lists for anything list-like
+- Use LaTeX for all math as described above
+- Use **bold** for key terms on first mention
+- Do NOT repeat or reference the specific quiz questions/options — this must stand alone as general study material
+- Do NOT pad with filler or repeat the same point in different words — every paragraph should add new information
 
 Return ONLY valid JSON in this exact structure, with no extra commentary:
 
@@ -103,7 +134,7 @@ Return ONLY valid JSON in this exact structure, with no extra commentary:
       "answer": "Correct option"
     }
   ],
-  "note": "A long and detailed note on ${topic} that helps the user understand the topic and answer the questions. It should be long, detailed, and explanatory, but not repeat the quiz questions."
+  "note": "The full long-form Markdown study guide described above, as a single JSON string with \\n for line breaks"
 }
 `.trim();
 
@@ -118,6 +149,7 @@ Return ONLY valid JSON in this exact structure, with no extra commentary:
         model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
+        max_tokens: 8000,
       }),
     });
 
@@ -126,7 +158,7 @@ Return ONLY valid JSON in this exact structure, with no extra commentary:
     if (data.error) {
       console.error("Groq API error:", data.error);
       return res.status(502).json({
-        error: "Groq API failed",
+        error: "AI failed",
         details: data.error?.message,
       });
     }

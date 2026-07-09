@@ -1,24 +1,35 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaArrowRightSolid } from "react-icons/lia";
-import { LuFileStack, LuRefreshCcw } from "react-icons/lu";
+import { LuBadgeAlert, LuCircleAlert, LuFileStack, LuRefreshCcw } from "react-icons/lu";
+import { ScaleLoader } from "react-spinners";
+import { useAuth } from "../config/auth-context.jsx";
 
 function Explore() {
   const [quizy, setquizy] = useState([]);
+  const [load, setload] = useState(false);
+  const { user, isSignedIn } = useAuth();
 
   useEffect(() => {
-    fetch("https://quizora-r3li.onrender.com/explore")
+    setload(true);
+    fetch("http://localhost:3000/explore")
       .then((res) => res.json())
       .then((data) => {
-        const list = Array.isArray(data) ? data : Array.isArray(data?.quizes) ? data.quizes : [];
+        const list = Array.isArray(data)
+          ? data
+          : Array.isArray(data?.quizes)
+          ? data.quizes
+          : [];
         setquizy(list);
       })
-      .catch(() => setquizy([]));
-  }, []);
+      .catch(() => setquizy([]))
+      .finally(() => setload(false));
+  }, [load]);
 
   const refresh = () => {
     window.location.reload();
-  }
+  };
+
   return (
     <div className="explore">
       <div className="explore-header">
@@ -30,12 +41,19 @@ function Explore() {
       </div>
 
       <div className="quizes">
-        {quizy.length === 0 ? (
+        {!isSignedIn ? (
+          <div className="need">
+            <p>You Need to Sign In First</p>
+            <LuBadgeAlert size={50} color="red"/>
+            <Link to="/signup"><button>SIGN IN</button></Link>
+          </div>
+        ) : quizy.length === 0 ? (
           <div className="empty">
             <p className="empty">No Quiz Available</p>
-          <button className="refresh" onClick={refresh}>Refresh <LuRefreshCcw /></button>
+            <button className="refresh" onClick={refresh}>
+              Refresh <LuRefreshCcw />
+            </button>
           </div>
-          
         ) : (
           quizy.map((quiz, i) => (
             <div
@@ -59,8 +77,8 @@ function Explore() {
                   <p className="quizy-desc">{quiz.desc}</p>
                 </div>
 
-                <Link to={`/quiz/${quiz.id}`} className="quizy-link">
-                  Start Quiz <LiaArrowRightSolid className="quizy-arrow" />
+                <Link to={`/note/${quiz.id}`} className="quizy-link">
+                  Begin Lesson <LiaArrowRightSolid className="quizy-arrow" />
                 </Link>
               </div>
             </div>

@@ -8,6 +8,7 @@ import Sign from "./Pages/SignUp";
 import Profile from "./Pages/Profile";
 import Create from "./Pages/Create";
 import { Toaster } from "react-hot-toast";
+import Note from "./Pages/Note";
 
 function App(){
     const [hideNav, setHideNav] = useState(false);
@@ -21,6 +22,7 @@ function App(){
             <Toaster />
         <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/note/:id" element={<Note/>}/>
             <Route path="/explore" element={<Explore/>}/>
             <Route path="/quiz/:id" element={<Page onQuizModeChange={setHideNav} />}/>
             <Route path="/signup" element={<Sign/>}/>

@@ -1,13 +1,21 @@
-// /*const admin = require("firebase-admin");
+﻿const admin = require('firebase-admin');
 
-// const serviceAccount =
-//   require("./serviceAccountKey.json");
+const projectId = process.env.FIREBASE_PROJECT_ID;
+const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+const privateKey = process.env.FIREBASE_PRIVATE_KEY;
 
-// admin.initializeApp({
-//   credential:
-//     admin.credential.cert(
-//       serviceAccount
-//     ),
-// });
+if (!projectId || !clientEmail || !privateKey) {
+  throw new Error(
+    'Missing Firebase admin credentials. Set FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, and FIREBASE_PRIVATE_KEY.'
+  );
+}
 
-// module.exports = admin;
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId,
+    clientEmail,
+    privateKey: privateKey.replace(/\\n/g, '\n'),
+  }),
+});
+
+module.exports = admin;

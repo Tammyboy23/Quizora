@@ -1,12 +1,19 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { signOut, updateProfile } from "firebase/auth";
+import { auth } from "../config/firebase-config";
 import toast from "react-hot-toast";
+import { FaPerson } from "react-icons/fa6";
+import { LuCalculator, LuChartBar, LuChartBarIncreasing, LuChartCandlestick, LuLogOut } from "react-icons/lu";
+import { useAuth } from "../config/auth-context.jsx";
 
 function Profile() {
-  const [username, setUsername] = useState(localStorage.getItem("username") || "Anonymous");
-  const [displayName, setDisplayName] = useState(localStorage.getItem("displayName") || "");
+  const [pop, setpop] = useState(false);
+  const { user, isSignedIn } = useAuth();
+  const [username, setUsername] = useState(user?.displayName || localStorage.getItem("username") || "Anonymous");
+  const [displayName, setDisplayName] = useState(user?.displayName || "");
   const [bio, setBio] = useState(localStorage.getItem("bio") || "");
-  const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
-  const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || null);
+  const [email, setEmail] = useState(user?.email || "");
+  const [avatar, setAvatar] = useState(user?.photoURL || localStorage.getItem("avatar") || null);
   const [timezone, setTimezone] = useState(localStorage.getItem("pref_timezone") || "");
   const [difficulty, setDifficulty] = useState(localStorage.getItem("pref_difficulty") || "any");
   const [accent, setAccent] = useState(localStorage.getItem("pref_accent") || "purple");
@@ -18,6 +25,23 @@ function Profile() {
 
   const stats = JSON.parse(localStorage.getItem("quizStats") || '{"taken":0,"accuracy":0,"streak":0}');
 
+  // Sync Firebase user data when user object changes
+  useEffect(() => {
+    if (user) {
+      setDisplayName(user.displayName || "");
+      setEmail(user.email || "");
+      setAvatar(user.photoURL || localStorage.getItem("avatar") || null);
+      setUsername(user.displayName || localStorage.getItem("username") || "Anonymous");
+    }
+  }, [user?.uid]);
+
+  function logout() {
+      signOut(auth)
+      setpop(!pop)
+      toast.success("Logged Out")
+      navigation('/')
+      window.location.reload();
+    }
   function showSaved(msg = "Changes saved") {
     setSaveMsg(msg);
     setTimeout(() => setSaveMsg(""), 2200)
@@ -36,13 +60,16 @@ function Profile() {
   function saveField(key) {
     const val = (inputs[key] || "").trim();
     if (key === "username" && !val) return;
+    
     switch (key) {
       case "username":
         setUsername(val);
         localStorage.setItem("username", val);
+        if (user) updateProfile(user, { displayName: val }).catch(() => {});
         break;
       case "displayName":
         setDisplayName(val);
+        if (user) updateProfile(user, { displayName: val }).catch(() => {});
         val ? localStorage.setItem("displayName", val) : localStorage.removeItem("displayName");
         break;
       case "bio":
@@ -72,6 +99,7 @@ function Profile() {
       const dataUrl = ev.target.result;
       setAvatar(dataUrl);
       localStorage.setItem("avatar", dataUrl);
+      if (user) updateProfile(user, { photoURL: dataUrl }).catch(() => {});
       showSaved("Photo updated");
     };
     reader.readAsDataURL(file);
@@ -80,6 +108,7 @@ function Profile() {
   function removeAvatar() {
     setAvatar(null);
     localStorage.removeItem("avatar");
+    if (user) updateProfile(user, { photoURL: null }).catch(() => {});
     showSaved("Photo removed");
   }
 
@@ -149,7 +178,10 @@ function Profile() {
   }
 
   return (
+    <>
+    
     <div className="layout">
+      
       <div className="content">
         
         <div className="profile-page">
@@ -161,7 +193,7 @@ function Profile() {
           {/* ── Identity ── */}
           <div className="profile-section-card">
             <div className="profile-section-head">
-              <span className="section-icon-chip">👤</span>
+              <span className="section-icon-chip"><FaPerson /></span>
               <span className="section-label">Identity</span>
             </div>
             <div className="profile-section-body">
@@ -186,87 +218,16 @@ function Profile() {
               {renderField("username",    "Username",     username,    "Your username…")}
               {renderField("displayName", "Display name", displayName, "How you appear to others…")}
               {renderField("bio",         "Bio",          bio,         "Tell others about yourself…", true)}
+              {renderField("email",       "Email",        email,       "your@email.com")}
             </div>
           </div>
 
-          {/* ── Contact ── */}
-          <div className="profile-section-card">
-            <div className="profile-section-head">
-              <span className="section-icon-chip">✉️</span>
-              <span className="section-label">Contact</span>
-            </div>
-            <div className="profile-section-body">
-              {renderField("email", "Email address", email, "you@example.com")}
-            </div>
-          </div>
-
-          {/* ── Preferences ── */}
-          <div className="profile-section-card">
-            <div className="profile-section-head">
-              <span className="section-icon-chip">⚙️</span>
-              <span className="section-label">Preferences</span>
-            </div>
-            <div className="profile-section-body">
-
-              <div className="profile-field">
-                <label className="field-label">Timezone</label>
-                <select
-                  className="pref-select"
-                  value={timezone}
-                  onChange={(e) => savePref("timezone", e.target.value, setTimezone)}
-                >
-                  <option value="">— Select timezone —</option>
-                  <option value="UTC">UTC</option>
-                  <option value="America/New_York">Eastern Time (ET)</option>
-                  <option value="America/Chicago">Central Time (CT)</option>
-                  <option value="America/Denver">Mountain Time (MT)</option>
-                  <option value="America/Los_Angeles">Pacific Time (PT)</option>
-                  <option value="Europe/London">London (GMT/BST)</option>
-                  <option value="Europe/Paris">Paris (CET/CEST)</option>
-                  <option value="Africa/Lagos">Lagos (WAT)</option>
-                  <option value="Asia/Dubai">Dubai (GST)</option>
-                  <option value="Asia/Kolkata">Mumbai / Delhi (IST)</option>
-                  <option value="Asia/Singapore">Singapore (SGT)</option>
-                  <option value="Asia/Tokyo">Tokyo (JST)</option>
-                  <option value="Australia/Sydney">Sydney (AEST)</option>
-                </select>
-              </div>
-
-              <div className="profile-field">
-                <label className="field-label">Default quiz difficulty</label>
-                <select
-                  className="pref-select"
-                  value={difficulty}
-                  onChange={(e) => savePref("difficulty", e.target.value, setDifficulty)}
-                >
-                  <option value="any">Any difficulty</option>
-                  <option value="easy">Easy</option>
-                  <option value="medium">Medium</option>
-                  <option value="hard">Hard</option>
-                </select>
-              </div>
-
-              <div className="profile-field">
-                <label className="field-label">Color accent</label>
-                <select
-                  className="pref-select"
-                  value={accent}
-                  onChange={(e) => savePref("accent", e.target.value, setAccent)}
-                >
-                  <option value="purple">Purple (default)</option>
-                  <option value="blue">Blue</option>
-                  <option value="pink">Pink</option>
-                  <option value="teal">Teal</option>
-                </select>
-              </div>
-
-            </div>
-          </div>
+      
 
           {/* ── Stats ── */}
           <div className="profile-section-card">
             <div className="profile-section-head">
-              <span className="section-icon-chip">📊</span>
+              <span className="section-icon-chip"><LuChartBarIncreasing /></span>
               <span className="section-label">Your stats</span>
             </div>
             <div className="profile-section-body">
@@ -294,16 +255,33 @@ function Profile() {
               <span className="section-label section-label--danger">Danger zone</span>
             </div>
             <div className="danger-zone">
-              <p className="danger-desc">Clear all saved profile data and reset to defaults</p>
-              <button className="danger-btn" onClick={resetProfile}>Reset profile</button>
+              <p className="danger-desc">Logout Of Current Device</p>
+              <button className="danger-btn" onClick={() => setpop(!pop)}><LuLogOut /> LogOut </button>
             </div>
           </div>
 
           {saveMsg && <div className="save-toast">{saveMsg} ✓</div>}
         </div>
       </div>
+      
     </div>
+    <div className="pop" style={{
+      display: pop? 'flex': 'none',
+    }}>
+        <div className="pop-con" >
+          <div className="bar"></div>
+          <div className="span"><LuLogOut color="red" size={30}/></div>
+          <h1>Log Out</h1>
+          <p>Are you sure you want to log out</p>
+          <div className="pop-btns">
+            <button onClick={() => setpop(!pop)}>Cancel</button>
+            <button onClick={logout}>Confirm</button>
+          </div>
+        </div>
+      </div>
+    </>
   );
+
 }
 
 export default Profile;

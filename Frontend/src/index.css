@@ -828,20 +828,17 @@ body{
 }
 
 .top-btns button{
-    padding: 10px 16px;
-    font-size: 1rem;
+    padding: 10px 20px;
+    border: 1px solid var(--accent2);
+    background: rgb(30, 18, 39);
+    font-size: 1.2rem;
+    color: rgb(255, 255, 255);
     border-radius: 12px;
-    border: none;
-    min-width: 96px;
     cursor: pointer;
-    background: rgba(108, 99, 255, 0.16);
-    color: #fff;
-    transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .top-btns button:hover{
-    background: rgba(108, 99, 255, 0.28);
-    transform: translateY(-1px);
+    background: var(--accent2);
 }
 
 .profile-top{
@@ -874,14 +871,22 @@ body{
     margin-top: auto;
     transition: all 0.25s ease;
 }
-
 .greet h2{
-    font-family: outfit,sans-serif;
+    font-family: cabin ,sans-serif;
+    font-size: 1.5rem;
+}
+.greet span{
+  font-family: rubik;
+  background: linear-gradient(to right, rgb(146, 6, 216) , rgb(81, 33, 113));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .greet p{
   text-transform: capitalize;
-  font-family: outfit, sans-serif;
+  font-family: rubik, sans-serif;
   color: rgb(124, 124, 124);
 }
 
@@ -1294,6 +1299,9 @@ body{
   }
   .board-top span{
     padding: 5px 13px;
+  }
+  .greet h2{
+    font-size: 2rem;
   }
 }
 
@@ -2612,4 +2620,162 @@ form button:hover{
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+/**NOTES PAGE **/
+.note{
+  padding: 30px;
+  font-family: inter;
+}
+.note h1{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.note-paragraph{
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.note-h2{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-decoration: underline var(--accent2);
+  font-style: italic;
+}
+.note-h3{
+  font-size: 1.5rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.note-list{
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+  gap: 7px;
+}
+.down{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.down a{
+  text-decoration: none;
+}
+.down button{
+  align-items: center;
+  border: 1px solid rgba(187, 66, 239, 0.557);
+  background: #230c34;
+  padding: 10px 20px;
+  color: grey;
+  border-radius: 12px;
+  transition: 0.3s ease;
+  display: flex;
+  gap: 7px;
+  text-decoration:none;
+}
+.down button:hover{
+  background: rgb(173, 104, 252);
+  color:#fff;
+}
+.loader{
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ margin-top: 50px;
+ gap: 30px;
+}
+.need{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.need p{
+  font-family: outfit;
+  font-size: 1.5rem;
+}
+.need button{
+  background: var(--border);
+  border: 1px solid var(--accent2);
+  padding: 10px 20px;
+  color: #f0f0f0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.need button:hover{
+  background: var(--accent2);
+}
+.pop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background: rgba(27, 27, 27, 0.297);
+  backdrop-filter: blur(10px);
+}
+.pop-con{
+  background: var(--btn);
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  width: 100vw;
+  height: 45vh;
+  gap: 10px;
+  justify-content: center;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  text-align: center;
+  animation: slide-up 0.5s ease;
+}
+.pop-con h1{
+  font-family: outfit;
+}
+.pop-con p{
+
+  font-family: rubik;
+  color: rgb(114, 114, 114)
+}
+.span{
+  background: rgb(55, 22, 22);
+  margin: 0 auto;
+  border: 1px solid rgb(255, 1, 1);
+  border-radius: 50%;
+  padding: 14px 17px;
+  justify-content: center;
+  align-items: center;
+}
+.pop-btns{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px
+}
+.pop-btns button{
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+.pop-btns button:nth-child(2){
+  background: rgb(255, 1, 1);
+  color: #fff;
+}
+.pop-btns button:nth-child(2):hover{
+  background: rgb(255, 1, 1);
+}
+@keyframes slide-up{
+  0%{
+    transform: translateY(500px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
 }

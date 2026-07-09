@@ -8,10 +8,18 @@ import { useEffect, useRef, useState } from "react";
 function Home(){
     const average = Number(localStorage.getItem("average") || 0);
     const notifications = [];
+    const [created, setcreated] = useState([])
     const [open, setOpen] = useState(false);
     const bellRef = useRef(null);
     const panelRef = useRef(null);
 
+    useEffect(() => {
+        fetch("http://localhost:3000/dashboard/created")
+        .then(res => res.json())
+        .then((data) => {
+            setcreated(data)
+        })
+    },[])
     useEffect(() => {
         if (!open) return;
 
@@ -92,12 +100,12 @@ function Home(){
                 border: '2px solid #4d4d4f43',
                 borderTop: `2px solid hsl(150, 100%, 47%)`
             }}>
-                <div className="board-top"><h3>Quizes Taken</h3><span style={{
+                <div className="board-top"><h3>Quizes Created</h3><span style={{
                     background: '#182c2c',
                 }}><FaStackExchange size="20" color="hsl(150, 100%, 47%)"/> </span></div>
                 <h1 style={{
                     color: 'hsl(150, 100%, 47%)',
-                }}>10 Qz</h1>
+                }}>{String(created.length)} Qz</h1>
             </div>
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',

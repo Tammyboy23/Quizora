@@ -10,11 +10,7 @@ function NavBar({ hidden }) {
   const drawerRef = useRef(null);
   const location = useLocation();
 
-  function logout() {
-    localStorage.setItem("islogedin", "false");
-    localStorage.setItem("username", "");
-    window.location.reload();
-  }
+  
 
   useEffect(() => {
     setOpen(false);
@@ -67,7 +63,6 @@ function NavBar({ hidden }) {
           </button>
         </div>
         {navLinks}
-        <button onClick={logout} className="logout-btn">Logout <LuLogOut /> </button>
       </div>
 
       <div className="nav">
@@ -75,7 +70,6 @@ function NavBar({ hidden }) {
           <h1><FaQq /> QUIZORA</h1>
         </div>
         {navLinks}
-        <button onClick={logout}>Logout  <LuLogOut /></button>
       </div>
     </>
   );

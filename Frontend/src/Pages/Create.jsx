@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LuPencil, LuFileText, LuSmile, LuSettings, LuZap } from "react-icons/lu";
 import { FaRegFaceMeh, FaFaceAngry, FaTriangleExclamation } from "react-icons/fa6";
+import { RingLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -170,7 +171,7 @@ function Create() {
                       animation: "spin 0.7s linear infinite",
                       display: "inline-block",
                     }} />
-                    Generating…
+                    Generating… <RingLoader color="#ffffff" size={20}/>
                   </>
                 ) : (
                   <>
