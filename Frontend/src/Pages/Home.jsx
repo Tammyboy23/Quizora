@@ -1,13 +1,29 @@
 import {  AiFillFire } from "react-icons/ai";
 import Top from "./top";
 import {  FaChartLine, FaStackExchange, FaTrophy } from "react-icons/fa";
-import { FaMagnifyingGlass, FaStopwatch } from "react-icons/fa6";
 import { LuBell, LuBellDot } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
+import { getNotifications, markAllAsRead } from "../utils/notifications";
+
+function formatTimeAgo(timestamp) {
+  if (!timestamp) return "";
+  const now = new Date();
+  const date = new Date(timestamp);
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHrs = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHrs < 24) return `${diffHrs}h ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
 
 function Home(){
     const average = Number(localStorage.getItem("average") || 0);
-    const notifications = [];
+    const [notifications, setNotifications] = useState(() => getNotifications());
     const [created, setcreated] = useState([])
     const [open, setOpen] = useState(false);
     const bellRef = useRef(null);
@@ -20,6 +36,15 @@ function Home(){
             setcreated(data)
         })
     },[])
+
+    // Refresh notifications from storage whenever panel opens
+    useEffect(() => {
+        if (open) {
+            setNotifications(getNotifications());
+            markAllAsRead();
+        }
+    }, [open]);
+
     useEffect(() => {
         if (!open) return;
 
@@ -59,12 +84,15 @@ function Home(){
                     </div>
                     <div className="line"></div>
                     {notifications.length === 0 ? (
-                        <p className="notification-empty">You’re all caught up for now.</p>
+                        <p className="notification-empty">You&rsquo;re all caught up for now.</p>
                     ) : (
                         <ul className="notification-list">
-                            {notifications.map((i) => {
-                                <li key={i.id}>i</li>
-                            })}
+                            {notifications.map((n) => (
+                                <li key={n.id} className="notification-item">
+                                    <span className="notification-msg">{n.message}</span>
+                                    <span className="notification-time">{formatTimeAgo(n.timestamp)}</span>
+                                </li>
+                            ))}
                         </ul>
                     )}
                 </div>

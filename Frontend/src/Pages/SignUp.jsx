@@ -3,6 +3,7 @@ import { LuEye, LuEyeOff, LuMail, LuUser, LuLock } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {signUp, signIn, signInWithGoogle, logOut, watchAuthState} from "../config/auth"
+import { addNotification } from "../utils/notifications";
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 48 48">
     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -28,6 +29,7 @@ function Sign() {
   const signup = async() => {
     try{
       await signUp(email, password);
+      addNotification("Signed up and logged in on this device", "auth");
       toast.success("Account Created");
       navigate('/')
 
@@ -42,6 +44,7 @@ function Sign() {
   const login = async() => {
     try{
       await signIn(email, password);
+      addNotification("Logged into this device", "auth");
       toast.success("Logged In Successfully")
       navigate('/')
     }
@@ -54,6 +57,7 @@ function Sign() {
 
   const googleAuth = async() => {
     await signInWithGoogle();
+    addNotification("Logged in with Google on this device", "auth");
     navigate('/')
   }
 

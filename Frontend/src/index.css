@@ -2409,16 +2409,53 @@ body{
   background: rgba(255, 255, 255, 0.08);
 }
 
-.notification-empty,
-.notification-list {
+.notification-empty {
   color: #d8d7e8;
   font-size: 0.92rem;
   line-height: 1.45;
   font-family: rubik, sans-serif;
+  padding: 12px 4px;
 }
 
 .notification-list {
-  padding-left: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.15s;
+}
+
+.notification-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.notification-item + .notification-item {
+  margin-top: 6px;
+}
+
+.notification-msg {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #e8e7f0;
+  font-family: outfit, sans-serif;
+  line-height: 1.4;
+}
+
+.notification-time {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-family: rubik, sans-serif;
 }
 
 @media (max-width: 900px) {
@@ -2777,5 +2814,91 @@ form button:hover{
   }
   100%{
     transform: translateY(0px);
+  }
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE BOTTOM NAVIGATION
+   ══════════════════════════════════════════════ */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+  background: #09090f;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 8px;
+  padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+}
+
+.bottom-nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 6px 16px;
+  border-radius: 12px;
+  transition: color 0.2s, background 0.2s;
+  min-width: 56px;
+  position: relative;
+}
+
+.bottom-nav-link:hover {
+  color: var(--font2);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.bottom-nav-link--active {
+  color: var(--accent2);
+}
+
+.bottom-nav-link--active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 0 0 3px 3px;
+}
+
+.bottom-nav-label {
+  font-size: 0.62rem;
+  font-family: outfit, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 900px) {
+  .bottom-nav {
+    display: flex;
+  }
+
+  /* Add bottom padding so content isn't hidden behind the nav */
+  .content {
+    padding-bottom: 92px !important;
+  }
+
+  /* Hide old burger and drawer */
+  .burger-btn {
+    display: none !important;
+  }
+
+  .drawer-overlay {
+    display: none !important;
+  }
+
+  .drawer {
+    display: none !important;
   }
 }
