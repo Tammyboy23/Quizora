@@ -3,14 +3,21 @@ Quizora is an AI Learning Application Built initially as a regular Quiz app but 
 👉👉👉[HERE](https://quizora-tammy.neltlify.app)👈👈👈
 
 ## 👨‍💻 TECH STACK
--[X]Frontend
+-Frontend
  -React
  -Vite
  -React-Icons
--[X]Backend
+-Backend
  -Node.js
  -Express.js
  -Javascript
--[X]Authentication
+-Authentication
  -Firebase
--[]Database
+-Database
+ -In Progress
+
+## 💡FEATURES
+Use of React Icons 
+```bash
+ npm install react-icons
+```
