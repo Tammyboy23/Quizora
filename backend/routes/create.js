@@ -131,6 +131,7 @@ Requirements:
 - Number of questions: ${questionCount}
 - Each question must have 4 options
 - Only one correct answer per question
+- A breif and short one sentence explanation for the correct answer and whi it is correct according to the question
 - Make questions clear, educational, and exam-ready
 - Difficulty: ${difficulty || "medium"}
 - Quiz format: ${quizTypeValue}
@@ -148,7 +149,8 @@ Return ONLY valid JSON in this exact structure, with no extra commentary:
     {
       "question": "Question text",
       "options": ["A", "B", "C", "D"],
-      "answer": "Correct option"
+      "answer": "Correct answer",
+      "explanation" : "A brief explanation on the answer",
     }
   ],
   "note": ${notePlaceholder}
