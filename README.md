@@ -20,12 +20,13 @@ Quizora is an AI Learning Application Built initially as a regular Quiz app but 
 ## 💡FEATURES
 
 ### Dashboard 📊
-Dashboard contains ```boards``` that contain certain information all automated be the backend of the system and a notifications feature that is still under Work .
+ Dashboard contains ```boards``` that contain certain information all automated be the backend of the system and a notifications feature that is still under Work .
 ---
 ### Explore 🔍
-Explore page that refuses to show the content unless you are signed into an account a security measure .
+
+ Explore page that refuses to show the content unless you are signed into an account a security measure .
 ---
 ### Create 👷‍♂️
-Create either a Lesson which Contains Notes Summary and Quiz on a particular topic of your choice .
+ Create either a Lesson which Contains Notes Summary and Quiz on a particular topic of your choice .
 ---
 Built me [Tammy](https://tammy-portfolio.netlify.app)

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaArrowRightSolid } from "react-icons/lia";
-import { LuBadgeAlert, LuBookImage, LuLayers, LuRefreshCcw, LuShieldQuestion } from "react-icons/lu";
+import { LuBadgeAlert, LuBookCheck, LuBookImage, LuLayers, LuNewspaper, LuRefreshCcw, LuShieldQuestion } from "react-icons/lu";
 import { useAuth } from "../config/auth-context.jsx";
 import { ScaleLoader } from "react-spinners";
 
@@ -13,7 +13,7 @@ function Explore() {
 
   useEffect(() => {
     setload(true);
-    fetch("http://localhost:3000/explore",{
+    fetch("https://quizora-r3li.onrender.com/explore",{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -39,8 +39,8 @@ function Explore() {
   const filters = ["all", "Lesson", "QuizOnly"];
   const filterIcons = {
     all: <LuLayers size={14} />,
-    Lesson: <LuBookImage size={14} />,
-    QuizOnly: <LuShieldQuestion size={14} />,
+    Lesson: <LuBookCheck size={14} />,
+    QuizOnly: <LuNewspaper size={14} />,
   };
   const filterLabels = {
     all: "All",
@@ -103,7 +103,7 @@ function Explore() {
                     <img src={quiz.img} alt={quiz.name} />
                   </div>
                   <span className="quizy-count">
-                    {quiz.quizType === "QuizOnly" ? <LuShieldQuestion /> : <LuBookImage />}
+                    {quiz.quizType === "QuizOnly" ? <LuNewspaper /> : <LuBookCheck />}
                     {quiz.quizType}
                   </span>
                 </div>

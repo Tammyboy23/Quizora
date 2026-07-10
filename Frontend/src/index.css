@@ -3144,7 +3144,7 @@ form button:hover{
   backdrop-filter: blur(10px);
 }
 .pop-con{
-  background: var(--btn);
+  background: #18181e;
   display: flex;
   flex-direction: column;
   padding: 30px;

@@ -30,7 +30,7 @@ function Home(){
     const panelRef = useRef(null);
 
     useEffect(() => {
-        fetch("http://localhost:3000/dashboard/created")
+        fetch("https://quizora-r3li.onrender.com/dashboard/created")
         .then(res => res.json())
         .then((data) => {
             setcreated(data)

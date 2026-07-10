@@ -18,7 +18,7 @@ function Note(){
         setloading(true);
         setnotes(null);
         seterror(false);
-        fetch(`http://localhost:3000/note/${id}`)
+        fetch(`https://quizora-r3li.onrender.com/note/${id}`)
         .then(res => res.json())
         .then((data) => {
             setnotes(data);
