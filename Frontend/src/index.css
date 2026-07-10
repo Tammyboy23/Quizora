@@ -1040,7 +1040,7 @@ body{
 
 .quizy-desc {
   font-family: rubik, sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--muted);
   line-height: 1.55;
   display: -webkit-box;
@@ -1213,6 +1213,9 @@ body{
 }
 
 @media (max-width: 900px) {
+  .quizy-desc{
+    display: none;
+  }
   .burger-btn {
     display: block;
     position: fixed;
@@ -1282,7 +1285,7 @@ body{
     flex-wrap: wrap;
   }
   .quizes {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
   .quiz {
     padding: 22px;
@@ -3324,5 +3327,77 @@ form button:hover{
 @media(max-width: 900px){
   .quiz-btns{
     width: 50vw;
+  }
+}
+.load{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: outfit;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+.filter-bar {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 32px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  width: fit-content;
+  position: relative;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border: none;
+  border-radius: 10px;
+  font-family: outfit, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--muted);
+  background: transparent;
+  white-space: nowrap;
+  position: relative;
+}
+
+.filter-btn:hover {
+  color: var(--font2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn--active {
+  color: #fff;
+  background: var(--accent);
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.35);
+}
+
+.filter-btn--active:hover {
+  background: var(--accent2);
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .filter-bar {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 9px 14px;
+    font-size: 0.8rem;
   }
 }
