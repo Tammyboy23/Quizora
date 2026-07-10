@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaArrowRightSolid } from "react-icons/lia";
-import { LuBadgeAlert, LuCircleAlert, LuFileStack, LuRefreshCcw } from "react-icons/lu";
+import { LuBadgeAlert, LuCircleAlert, LuFileStack, LuRecycle, LuRefreshCcw } from "react-icons/lu";
 import { ScaleLoader } from "react-spinners";
 import { useAuth } from "../config/auth-context.jsx";
 
@@ -33,7 +33,7 @@ function Explore() {
   return (
     <div className="explore">
       <div className="explore-header">
-        <div className="explore-eyebrow">All Quizzes</div>
+        <div className="explore-eyebrow">Explore Page</div>
         <h1 className="explore-title">What do you want to test today?</h1>
         <p className="explore-subtitle">
           Pick a category and put your knowledge to the test.
@@ -49,10 +49,8 @@ function Explore() {
           </div>
         ) : quizy.length === 0 ? (
           <div className="empty">
-            <p className="empty">No Quiz Available</p>
-            <button className="refresh" onClick={refresh}>
-              Refresh <LuRefreshCcw />
-            </button>
+            <p className="empty">No Quiz Available</p> <br></br>
+            <button className="reload" onClick={refresh}>Reload <LuRefreshCcw /></button>
           </div>
         ) : (
           quizy.map((quiz, i) => (

@@ -877,7 +877,7 @@ body{
 }
 .greet span{
   font-family: rubik;
-  background: linear-gradient(to right, rgb(146, 6, 216) , rgb(81, 33, 113));
+  background: linear-gradient(to right, rgb(146, 6, 216) , rgb(199, 118, 253));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2325,7 +2325,21 @@ body{
     align-self: stretch;
   }
 }
-
+.notification-item{
+  display: flex;
+  flex-direction: column;
+  background: #222233;
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(108, 99, 255, 0.4)
+}
+.notification-msg{
+  color:#fff;
+}
+.notification-time{
+  font-size: 0.8rem;
+  color: rgb(114, 114, 114);
+}
 .notification-shell {
   position: relative;
   display: flex;
@@ -2409,53 +2423,16 @@ body{
   background: rgba(255, 255, 255, 0.08);
 }
 
-.notification-empty {
+.notification-empty,
+.notification-list {
   color: #d8d7e8;
   font-size: 0.92rem;
   line-height: 1.45;
   font-family: rubik, sans-serif;
-  padding: 12px 4px;
 }
 
 .notification-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.notification-item {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: background 0.15s;
-}
-
-.notification-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.notification-item + .notification-item {
-  margin-top: 6px;
-}
-
-.notification-msg {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #e8e7f0;
-  font-family: outfit, sans-serif;
-  line-height: 1.4;
-}
-
-.notification-time {
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-family: rubik, sans-serif;
+  padding-left: 16px;
 }
 
 @media (max-width: 900px) {
@@ -2901,4 +2878,17 @@ form button:hover{
   .drawer {
     display: none !important;
   }
+}
+.reload{
+  padding: 7px 10px;
+  border-radius: 13px;
+  border: 1px solid var(--accent2);
+  background: var(--accent2);
+  color: #fff;
+  font-family: rubik;
+  transition: 0.5s ease;
+}
+.reload:hover{
+  background:rgb(30, 18, 39);
+  border: 1px solid var(--accent2);
 }

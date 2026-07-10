@@ -89,6 +89,7 @@ function Home(){
                         <ul className="notification-list">
                             {notifications.map((n) => (
                                 <li key={n.id} className="notification-item">
+                                    
                                     <span className="notification-msg">{n.message}</span>
                                     <span className="notification-time">{formatTimeAgo(n.timestamp)}</span>
                                 </li>
@@ -98,7 +99,7 @@ function Home(){
                 </div>
             ) : null}
         </div>
-       
+       <div className="explore-eyebrow">Dashboard</div>
         <Top/>
         <div className="home">
         <div className="dashboards">

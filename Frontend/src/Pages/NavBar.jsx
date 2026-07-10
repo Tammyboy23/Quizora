@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { FaUser, FaQq } from "react-icons/fa";
-import { LuCompass, LuCirclePlus } from "react-icons/lu";
+import { LuCompass, LuCirclePlus, LuBookHeadphones } from "react-icons/lu";
 import { MdDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
@@ -38,7 +38,7 @@ function NavBar({ hidden }) {
       {/* Desktop sidebar */}
       <div className="nav">
         <div className="logo">
-          <h1><FaQq /> QUIZORA</h1>
+          <h1><LuBookHeadphones /> QUIZORA</h1>
         </div>
         {navLinks}
       </div>
