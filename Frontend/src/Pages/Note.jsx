@@ -78,7 +78,7 @@ return(
             </ReactMarkdown>
         </div>
         <div className="down">
-            <Link to={`/quiz/${notes.id}`}><button><p>Take Quiz</p> <LuBookOpenText /></button></Link>
+            <Link to={`/quiz/${notes.id}`}><button className="quizy-link"><p>Take Quiz</p> <LuBookOpenText /></button></Link>
         </div>
     </div>
     </>

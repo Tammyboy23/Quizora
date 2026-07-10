@@ -1,7 +1,7 @@
 // filepath: c:\Users\Tamilore\Documents\Projects\Quiz App\Frontend\src\Pages\Page.jsx
 import { useState, useEffect, useRef } from "react";
-import { LuFileWarning, LuMessageCircleWarning, LuTriangleAlert } from "react-icons/lu";
-import { useParams } from "react-router-dom";
+import { LuFileWarning, LuMessageCircleWarning, LuSearch, LuTriangleAlert } from "react-icons/lu";
+import { Link, useParams } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 
 function Page({ onQuizModeChange }) {
@@ -314,9 +314,15 @@ function Page({ onQuizModeChange }) {
                 <option value="exam">Exam Mode</option>
               </select>
             </div>
+            <div className="quiz-btns">
             <button className="start-btn" onClick={startQuiz}>
               Start Quiz
             </button>
+            <Link to="/explore"><button className="back">
+              Back to Explore Page
+            </button>
+            </Link>
+            </div>
           </div>
         </div>
       ) : currentQuestion < quizToShow.length ? (

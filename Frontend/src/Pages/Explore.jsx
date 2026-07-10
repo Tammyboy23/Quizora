@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaArrowRightSolid } from "react-icons/lia";
-import { LuBadgeAlert, LuCircleAlert, LuFileStack, LuRecycle, LuRefreshCcw } from "react-icons/lu";
+import { LuBadgeAlert, LuBookImage, LuCircleAlert, LuFileStack, LuRecycle, LuRefreshCcw, LuShieldQuestion } from "react-icons/lu";
 import { ScaleLoader } from "react-spinners";
 import { useAuth } from "../config/auth-context.jsx";
 
@@ -65,8 +65,8 @@ function Explore() {
                     <img src={quiz.img} alt={quiz.name} />
                   </div>
                   <span className="quizy-count">
-                    <LuFileStack />
-                    {quiz.queue.length} Qs
+                    {quiz.quizType == "QuizOnly" ? (<LuShieldQuestion/>) : (<LuBookImage/>)}
+                    {quiz.quizType}
                   </span>
                 </div>
 
@@ -75,7 +75,7 @@ function Explore() {
                   <p className="quizy-desc">{quiz.desc}</p>
                 </div>
 
-                <Link to={`/note/${quiz.id}`} className="quizy-link">
+                <Link to={`/${quiz.quizType == "Lesson"? "note" : "quiz"}/${quiz.id}`} className="quizy-link">
                   Begin Lesson <LiaArrowRightSolid className="quizy-arrow" />
                 </Link>
               </div>

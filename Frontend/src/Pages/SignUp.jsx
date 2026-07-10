@@ -58,6 +58,7 @@ function Sign() {
   const googleAuth = async() => {
     await signInWithGoogle();
     addNotification("Logged in with Google on this device", "auth");
+    toast.success("Logged In")
     navigate('/')
   }
 

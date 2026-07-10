@@ -4,6 +4,7 @@ const quizes = [
     "img": "https://www.svgrepo.com/show/178066/maths-technology.svg",
     "desc": "Example 2 is about me",
     "title": "Example 2",
+    "quizType": "QuizOnly",
     "id": 234,
     "queue": [
       {
@@ -47,6 +48,7 @@ const quizes = [
     "id": 1781016262138,
     "desc": "A short quiz to test your knowledge on integration testing",
     "img": "https://cdn-icons-png.flaticon.com/512/184/184615.png",
+    "quizType": "QuizOnly",
     "queue": [
       {
         "question": "What is the primary purpose of integration testing?",

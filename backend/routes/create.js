@@ -20,13 +20,15 @@ function extractJson(text) {
   return JSON.parse(candidate);
 }
 
-function normalizeQuiz(aiQuiz, fallbackTitle) {
+function normalizeQuiz(aiQuiz, fallbackTitle, fallbackQuizType = "QuizOnly") {
   if (!aiQuiz || typeof aiQuiz !== "object") {
     throw new Error("AI response was not a valid quiz object");
   }
 
   const topicTitle = String(aiQuiz.title || aiQuiz.name || fallbackTitle || "Quiz");
   const queue = Array.isArray(aiQuiz.queue) ? aiQuiz.queue : [];
+  // Prefer the user's selection (fallbackQuizType) over whatever the AI echoes back
+  const quizTypeValue = String(fallbackQuizType || "QuizOnly").trim() || "QuizOnly";
 
   const normalizedQueue = queue.map((item) => {
     const rawOptions = item?.options;
@@ -58,14 +60,16 @@ function normalizeQuiz(aiQuiz, fallbackTitle) {
     img: imgUrl,
     queue: normalizedQueue,
     note: aiQuiz.note || "",
+    quizType: quizTypeValue,
   };
 }
 
 router.post("/", async (req, res) => {
-  const { title, number, difficulty } = req.body;
+  const { title, number, difficulty, quizType } = req.body;
 
   const topic = String(title || "").trim();
   const questionCount = Number(number);
+  const quizTypeValue = String(quizType || "QuizOnly").trim() || "QuizOnly";
 
   if (!topic) {
     return res.status(400).json({ error: "Title is required" });
@@ -79,16 +83,10 @@ router.post("/", async (req, res) => {
     return res.status(500).json({ error: "AI is Malfunctioning" });
   }
 
- const prompt = `
-Create a multiple-choice quiz on the topic: ${topic}.
+ const isLesson = quizTypeValue === "Lesson";
 
-Requirements:
-- Number of questions: ${questionCount}
-- Each question must have 4 options
-- Only one correct answer per question
-- Make questions clear, educational, and exam-ready
-- Difficulty: ${difficulty || "medium"}
-
+  const noteInstructions = isLesson
+    ? `
 For the "note" field, write a comprehensive, textbook-style study guide on ${topic}.
 This must be LONG and IN-DEPTH — aim for 1500-2000 words minimum. Do not write a short summary.
 
@@ -118,14 +116,33 @@ Formatting rules:
 - Use LaTeX for all math as described above
 - Use **bold** for key terms on first mention
 - Do NOT repeat or reference the specific quiz questions/options — this must stand alone as general study material
-- Do NOT pad with filler or repeat the same point in different words — every paragraph should add new information
+- Do NOT pad with filler or repeat the same point in different words — every paragraph should add new information`
+    : `
+Set the "note" field to an empty string "". Save tokens, no study guide needed.`;
+
+  const notePlaceholder = isLesson
+    ? `"The full long-form Markdown study guide described above, as a single JSON string with \\n for line breaks"`
+    : `""`;
+
+  const prompt = `
+Create a multiple-choice quiz on the topic: ${topic}.
+
+Requirements:
+- Number of questions: ${questionCount}
+- Each question must have 4 options
+- Only one correct answer per question
+- Make questions clear, educational, and exam-ready
+- Difficulty: ${difficulty || "medium"}
+- Quiz format: ${quizTypeValue}
+${noteInstructions}
 
 Return ONLY valid JSON in this exact structure, with no extra commentary:
 
 {
-  "title": "Quiz title",
-  "name": "Quiz title",
+  "title": "title",
+  "name": "title",
   "desc": "A short description",
+  "quizType": "${quizTypeValue}",
   "imgKeyword": "a short keyword representing the topic icon",
   "queue": [
     {
@@ -134,7 +151,7 @@ Return ONLY valid JSON in this exact structure, with no extra commentary:
       "answer": "Correct option"
     }
   ],
-  "note": "The full long-form Markdown study guide described above, as a single JSON string with \\n for line breaks"
+  "note": ${notePlaceholder}
 }
 `.trim();
 
@@ -166,7 +183,7 @@ Return ONLY valid JSON in this exact structure, with no extra commentary:
     const responseText = data.choices?.[0]?.message?.content || "";
     const parsed = extractJson(responseText);
 
-    const aiQuiz = normalizeQuiz(parsed, topic);
+    const aiQuiz = normalizeQuiz(parsed, topic, quizTypeValue);
 
     quizes.push(aiQuiz);
 

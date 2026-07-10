@@ -6,6 +6,7 @@ import NavBar from "./Pages/NavBar";
 import Explore from "./Pages/Explore";
 import Sign from "./Pages/SignUp";
 import Profile from "./Pages/Profile";
+import EditProfile from "./Pages/EditProfile";
 import Create from "./Pages/Create";
 import { Toaster } from "react-hot-toast";
 import Note from "./Pages/Note";
@@ -27,6 +28,7 @@ function App(){
             <Route path="/quiz/:id" element={<Page onQuizModeChange={setHideNav} />}/>
             <Route path="/signup" element={<Sign/>}/>
             <Route path="/profile" element={<Profile />}/>
+            <Route path="/profile/edit" element={<EditProfile />}/>
             <Route path="/create" element={<Create />} />
         </Routes>
         </main>
