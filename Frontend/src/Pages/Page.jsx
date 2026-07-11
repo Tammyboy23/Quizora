@@ -30,6 +30,7 @@ function Page({ onQuizModeChange }) {
   const [timeLeft, setTimeLeft] = useState(30);
   const countdownTimerRef = useRef(null);
 
+  const option_letters = ["A","B","C","D"];
   const {id} = useParams();
   useEffect( () => {
     let mounted = true;
@@ -341,9 +342,9 @@ function Page({ onQuizModeChange }) {
             </div>
           </div>
           <div className="buttons">
-            {currentQuiz.options.map((ans) => (
+            {currentQuiz.options.map((ans, index) => (
               <button
-                key={ans}
+                key={index}
                 onClick={() => handleAns(ans)}
                 disabled={answered}
                 className={
@@ -356,7 +357,7 @@ function Page({ onQuizModeChange }) {
                     : ""
                 }
               >
-                {ans}
+               <span>{option_letters[index]}</span> {ans}
               </button>
             ))}
           </div>

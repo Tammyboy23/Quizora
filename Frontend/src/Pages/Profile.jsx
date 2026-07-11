@@ -18,6 +18,7 @@ function Profile() {
   const bio = localStorage.getItem("bio") || "";
   const email = user?.email || localStorage.getItem("userEmail") || "";
   const avatar = user?.photoURL || localStorage.getItem("avatar") || null;
+  const average = Number(localStorage.getItem("average") || 0);
 
   const stats = JSON.parse(localStorage.getItem("quizStats") || '{"taken":0,"accuracy":0,"streak":0}');
 
@@ -102,7 +103,7 @@ function Profile() {
                 <span className="stat-lbl">Quizzes taken</span>
               </div>
               <div className="stat-pill">
-                <span className="stat-val">{stats.accuracy}%</span>
+                <span className="stat-val">{average}%</span>
                 <span className="stat-lbl">Avg. accuracy</span>
               </div>
               <div className="stat-pill">

@@ -175,6 +175,12 @@ body{
     overflow: hidden;
     line-height: 1.45;
 }
+.buttons button span{
+  margin-right: 7px;
+  background:rgb(30, 18, 39);
+  padding: 10px 15px;
+  border-radius: 12px;
+}
 
 .buttons button::before {
     content: '';
@@ -3400,4 +3406,11 @@ form button:hover{
     padding: 9px 14px;
     font-size: 0.8rem;
   }
+}
+.Toastify__toast {
+  font-family: outfit , sans-serif;
+}
+
+.Toastify__toast-body {
+  font-family: outfit , sans-serif;
 }
