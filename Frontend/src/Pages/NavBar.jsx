@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
 import { FaUser, FaQq } from "react-icons/fa";
-import { LuCompass, LuCirclePlus, LuBookHeadphones, LuLogIn } from "react-icons/lu";
+import { LuCompass, LuCirclePlus, LuBookHeadphones } from "react-icons/lu";
 import { MdDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../config/auth-context";
 
 function NavBar({ hidden }) {
   const location = useLocation();
-  const { user, isSignedin } = useAuth();
+  const {user, isSignedin} = useAuth();
 
   if (hidden || location.pathname === "/signup") return null;
 
@@ -32,9 +32,7 @@ function NavBar({ hidden }) {
     { to: "/", icon: <MdDashboard size={20} />, label: "Dashboard" },
     { to: "/explore", icon: <LuCompass size={20} />, label: "Explore" },
     { to: "/create", icon: <LuCirclePlus size={20} />, label: "Create" },
-    isSignedin
-      ? { to: "/profile", icon: <FaUser size={20} />, label: "Profile" }
-      : { to: "/signup", icon: <LuLogIn size={20} />, label: "SignIn" },
+    { to: "/profile", icon: <FaUser size={20} />, label: "Profile" },
   ];
 
   return (
@@ -51,7 +49,7 @@ function NavBar({ hidden }) {
       <nav className="bottom-nav">
         {bottomNavLinks.map((link) => (
           <NavLink
-            key={link.to || link.label}
+            key={link.to}
             to={link.to}
             end={link.to === "/"}
             className={({ isActive }) =>
