@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {signUp, signIn, signInWithGoogle, logOut, watchAuthState} from "../config/auth"
 import { addNotification } from "../utils/notifications";
+import { FaLessThanEqual } from "react-icons/fa";
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 48 48">
     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -14,6 +15,7 @@ const GoogleIcon = () => (
 );
 
 function Sign() {
+  const [load, setload] = useState(false);
   const [mode, setMode] = useState("login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +29,7 @@ function Sign() {
   }
 
   const signup = async() => {
+    setload(true)
     try{
       await signUp(email, password);
       addNotification("Signed up and logged in on this device", "auth");
@@ -38,10 +41,12 @@ function Sign() {
       console.error(`Error: ${err}`);
       toast.error(`${err}`);
     }
+    setload(false)
     
   }
 
   const login = async() => {
+    setload(true)
     try{
       await signIn(email, password);
       addNotification("Logged into this device", "auth");
@@ -52,14 +57,17 @@ function Sign() {
       console.error(`Error: ${err}`)
       toast.error(`${err}`);
     }
-    
+    setload(false)
   }
 
   const googleAuth = async() => {
+    setload(true)
     await signInWithGoogle();
+    setload(false)
     addNotification("Logged in with Google on this device", "auth");
     toast.success("Logged In")
     navigate('/')
+
   }
 
   return (
@@ -141,7 +149,7 @@ function Sign() {
           )}
 
           <button onClick={mode === "login" ? login : signup} className="start-btn" style={{ width: "100%", marginTop: 4 }}>
-            {mode === "login" ? "Login" : "Create account"}
+           {load ? (<span className="create-spinner" />): ("")}  {mode === "login" ? "Login" : "Create account"}
           </button>
 
           <div style={{ display: "flex", alignItems: "center", gap: 12, color: "var(--muted)", fontSize: "0.8rem", fontFamily: "rubik" }}>
