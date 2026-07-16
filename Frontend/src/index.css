@@ -176,6 +176,9 @@ body{
     line-height: 1.45;
 }
 .buttons button span{
+  display: flex;
+  position: relative;
+  left: 0;
   margin-right: 7px;
   background:rgb(30, 18, 39);
   padding: 10px 15px;
