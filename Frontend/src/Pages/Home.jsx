@@ -1,7 +1,7 @@
 import {  AiFillFire } from "react-icons/ai";
 import Top from "./top";
-import {  FaChartLine, FaStackExchange, FaTrophy } from "react-icons/fa";
-import { LuBell, LuBellDot } from "react-icons/lu";
+import {  FaBook, FaChartLine, FaStackExchange, FaTrophy } from "react-icons/fa";
+import { LuBell, LuBellDot, LuTrendingUp } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
 import { getNotifications, markAllAsRead } from "../utils/notifications";
 
@@ -109,7 +109,7 @@ function Home(){
             }}>
                 <div className="board-top"><h3>Average</h3><span style={{
                     background: '#22213d',
-                }}><FaChartLine size="20" color="#6c63ff" /></span></div>
+                }}><LuTrendingUp size="20" color="#6c63ff" /></span></div>
                 <h1 style={{
                     color: '#6c63ff',
                 }}>{average}%</h1>
@@ -131,10 +131,10 @@ function Home(){
             }}>
                 <div className="board-top"><h3>Quizes Created</h3><span style={{
                     background: '#182c2c',
-                }}><FaStackExchange size="20" color="hsl(150, 100%, 47%)"/> </span></div>
+                }}><FaBook size="20" color="hsl(150, 100%, 47%)"/> </span></div>
                 <h1 style={{
                     color: 'hsl(150, 100%, 47%)',
-                }}>{String(created.length)} Qz</h1>
+                }}>{String(created.length)}Qz</h1>
             </div>
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',

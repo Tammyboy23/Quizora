@@ -10,6 +10,7 @@ import EditProfile from "./Pages/EditProfile";
 import Create from "./Pages/Create";
 import { Toaster } from "react-hot-toast";
 import Note from "./Pages/Note";
+import Chat from "./Pages/Chat";
 
 function App(){
     const [hideNav, setHideNav] = useState(false);
@@ -30,6 +31,7 @@ function App(){
             <Route path="/profile" element={<Profile />}/>
             <Route path="/profile/edit" element={<EditProfile />}/>
             <Route path="/create" element={<Create />} />
+            <Route path="/chat" element={<Chat />} />
         </Routes>
         </main>
         </div>

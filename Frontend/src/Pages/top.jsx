@@ -3,6 +3,7 @@ import prof from "../assets/prof.jpg";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../config/auth-context.jsx";
+import { LuCalendar } from "react-icons/lu";
 
 
 function Top() {
@@ -31,7 +32,7 @@ function Top() {
   return (
     <div className="tops">
       <div className="greet">
-            <h2> Good {time},  <span>{user?.displayName || "Guest"}</span> </h2>
+            <h2> Good {time}, <span>{user?.displayName || "Guest"}</span> </h2>
             <p style={{
               background: `rgb(29, 20, 63)`,
               border: '1px solid var(--accent)',
@@ -40,7 +41,7 @@ function Top() {
               borderRadius: '40px',
               color: '#7b7a7a',
               fontSize: '0.8rem'
-            }}>{new Date().toLocaleDateString('en-NG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'})}</p>
+            }}><LuCalendar /> {new Date().toLocaleDateString('en-NG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'})}</p>
         </div>
 
       <div className="side">

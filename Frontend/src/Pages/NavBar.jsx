@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { FaUser, FaQq } from "react-icons/fa";
-import { LuCompass, LuCirclePlus, LuBookHeadphones } from "react-icons/lu";
+import { LuCompass, LuCirclePlus, LuBookHeadphones, LuStar, LuSparkles } from "react-icons/lu";
 import { MdDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../config/auth-context";
@@ -22,6 +22,9 @@ function NavBar({ hidden }) {
       <NavLink to="/create" className={location.pathname === "/create" ? "list-active" : "list-a"}>
         <LuCirclePlus /> Create
       </NavLink>
+      <NavLink to="/chat" className={location.pathname === "/chat" ? "list-active" : "list-a"}>
+      <LuSparkles /> AI Chat
+      </NavLink>
       <NavLink to="/profile" className={location.pathname === "/profile" ? "list-active" : "list-a"}>
         <FaUser /> Profile
       </NavLink>
@@ -32,6 +35,7 @@ function NavBar({ hidden }) {
     { to: "/", icon: <MdDashboard size={20} />, label: "Dashboard" },
     { to: "/explore", icon: <LuCompass size={20} />, label: "Explore" },
     { to: "/create", icon: <LuCirclePlus size={20} />, label: "Create" },
+    {to: "/chat", icon: <LuSparkles size={20}/>, label: "AI Chat"},
     { to: "/profile", icon: <FaUser size={20} />, label: "Profile" },
   ];
 

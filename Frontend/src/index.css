@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Bebas+Neue&family=Cabin:ital,wght@0,400..700;1,400..700&family=Chocolate+Classical+Sans&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Luckiest+Guy&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Outfit:wght@100..900&family=Pacifico&family=Protest+Strike&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Bebas+Neue&family=Cabin:ital,wght@0,400..700;1,400..700&family=Chocolate+Classical+Sans&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Luckiest+Guy&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Outfit:wght@100..900&family=Pacifico&family=Protest+Strike&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -839,15 +838,18 @@ body{
 .top-btns button{
     padding: 10px 20px;
     border: 1px solid var(--accent2);
-    background: rgb(30, 18, 39);
+    background: linear-gradient(to right, rgb(191, 73, 255), rgb(142, 37, 255));
     font-size: 1.2rem;
+    font-weight: bold;
     color: rgb(255, 255, 255);
     border-radius: 12px;
     cursor: pointer;
 }
 
 .top-btns button:hover{
-    background: var(--accent2);
+    background: rgb(173, 104, 252);
+    transform: translateY(-3px);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.18);
 }
 
 .profile-top{
@@ -1120,7 +1122,11 @@ body{
   border-color: rgba(108, 99, 255, 0.35);
   box-shadow: 0 20px 34px rgba(108, 99, 255, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
+.board h1{
+  font-family: 'JetBrains Mono';
+}
 .board p{
+  font-family: 'JetBrains Mono';
   margin-top: 20px;
   font-size: 0.7rem;
 }
@@ -3416,4 +3422,29 @@ form button:hover{
 
 .Toastify__toast-body {
   font-family: outfit , sans-serif;
+}
+.chat{
+  margin: -26px;
+}
+.chat-top{
+  background: #171622a1;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.chat-top h1{
+  font-family: "JetBrains Mono";
+}
+.chat-top button{
+  padding: 8px 12px;
+  background: red;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.chat-top button:hover{
+  background: rgb(248, 69, 69);
 }
