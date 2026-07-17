@@ -1,7 +1,9 @@
 import {  AiFillFire } from "react-icons/ai";
 import Top from "./top";
-import {  FaBook, FaChartLine, FaStackExchange, FaTrophy } from "react-icons/fa";
-import { LuBell, LuBellDot, LuCheck, LuTriangleAlert, LuInfo, LuX, LuTrendingUp } from "react-icons/lu";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {  FaBook, FaChartLine, FaRobot, FaStackExchange, FaTrophy } from "react-icons/fa";
+import { LuBell, LuBellDot, LuCheck, LuTriangleAlert, LuInfo, LuX, LuTrendingUp, LuSpace, LuSparkle, LuSparkles, LuSettings, LuBook, LuPaperclip, LuSearch, LuCompass, LuNewspaper } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
 import { getNotifications, markAllAsRead } from "../utils/notifications";
 
@@ -26,6 +28,7 @@ function Home(){
     const [notifications, setNotifications] = useState(() => getNotifications());
     const [created, setcreated] = useState([])
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     const bellRef = useRef(null);
     const panelRef = useRef(null);
@@ -169,6 +172,16 @@ function Home(){
                 <h1 style={{
                     color: 'var(--accent)',
                 }}>#1</h1>
+            </div>
+        </div>
+        <div className="quick">
+            <h3>Quick Actions <LuSparkles /></h3>
+            <div className="quick-btns">
+                <button onClick={() => navigate('/chat')}><span><FaRobot /></span> <p>AI Chat</p> </button>
+                <button onClick={() => navigate('/profile')}><span><LuSettings /></span> <p>Settings</p></button>
+                <button onClick={() => navigate('/create')}><span><LuBook /></span> <p>Lessons</p></button>
+                <button onClick={() => navigate('/create')}><span>< LuNewspaper/></span> <p>Quizes</p></button>
+                <button onClick={() => navigate('/explore')}><span><LuCompass /></span> <p>Explore</p></button>
             </div>
         </div>
         </div>

@@ -3992,3 +3992,48 @@ form button:hover{
     padding: 10px 14px;
   }
 }
+.quick{
+  background: var(--card-bg);
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-top: 20px;
+}
+.quick-btns{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.quick-btns button:hover{
+  background: var(--btn-hover);
+}
+.quick h3{
+  font-family: "outfit";
+}
+.quick-btns h3{
+  color: var(--accent);
+}
+.quick-btns p{
+  font-family: "JetBrains Mono";
+}
+.quick-btns button span{
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+.quick-btns button{
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+}
+@media(max-width: 900px){
+.quick-btns{
+  display: grid;
+  gap: 7px;
+  grid-template-columns: repeat(3, 1fr);
+}
+}
