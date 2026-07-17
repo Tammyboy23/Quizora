@@ -1,9 +1,8 @@
 import {  AiFillFire } from "react-icons/ai";
 import Top from "./top";
 import {  FaBook, FaChartLine, FaStackExchange, FaTrophy } from "react-icons/fa";
-import { LuBell, LuBellDot, LuMoon, LuSun, LuTrendingUp } from "react-icons/lu";
+import { LuBell, LuBellDot, LuCheck, LuTriangleAlert, LuInfo, LuX, LuTrendingUp } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "../config/ThemeContext";
 import { getNotifications, markAllAsRead } from "../utils/notifications";
 
 function formatTimeAgo(timestamp) {
@@ -27,7 +26,6 @@ function Home(){
     const [notifications, setNotifications] = useState(() => getNotifications());
     const [created, setcreated] = useState([])
     const [open, setOpen] = useState(false);
-    const { darkMode, toggleTheme } = useTheme();
 
     const bellRef = useRef(null);
     const panelRef = useRef(null);
@@ -68,14 +66,6 @@ function Home(){
         <>
         <div className="notification-shell">
             <button
-                className="notification-btn theme-toggle-btn"
-                onClick={toggleTheme}
-                aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-                type="button"
-            >
-                {darkMode ? <LuSun size={19} /> : <LuMoon size={19} />}
-            </button>
-            <button
                 ref={bellRef}
                 className="notification-btn"
                 onClick={() => setOpen((prev) => !prev)}
@@ -88,24 +78,43 @@ function Home(){
                 <div ref={panelRef} className="notifications">
                     <div className="notification-header">
                         <div>
-                            <p className="notification-kicker">Updates</p>
-                            <h3>You have {notifications.length} notification{notifications.length === 1 ? "" : "s"}</h3>
+                            <p className="notification-kicker">Inbox</p>
+                            <h3>{notifications.length} notification{notifications.length === 1 ? "" : "s"}</h3>
                         </div>
-                        <span className="notification-badge">New</span>
+                        {notifications.some(n => !n.read) && (
+                          <span className="notification-badge">{notifications.filter(n => !n.read).length} new</span>
+                        )}
                     </div>
-                    <div className="line"></div>
+                    <div className="notif-divider"></div>
                     {notifications.length === 0 ? (
-                        <p className="notification-empty">You&rsquo;re all caught up for now.</p>
+                        <div className="notif-empty-state">
+                            <LuBell size={24} className="notif-empty-icon" />
+                            <p className="notif-empty-text">You&rsquo;re all caught up!</p>
+                        </div>
                     ) : (
-                        <ul className="notification-list">
-                            {notifications.map((n) => (
-                                <li key={n.id} className="notification-item">
-                                    
-                                    <span className="notification-msg">{n.message}</span>
-                                    <span className="notification-time">{formatTimeAgo(n.timestamp)}</span>
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="notification-list">
+                            {notifications.map((n) => {
+                                let Icon = LuBell;
+                                let iconColor = "var(--accent2)";
+                                if (n.type === "success") { Icon = LuCheck; iconColor = "var(--correct)"; }
+                                else if (n.type === "warning") { Icon = LuTriangleAlert; iconColor = "var(--incorrect)"; }
+                                else if (n.type === "error") { Icon = LuX; iconColor = "var(--incorrect)"; }
+                                else if (n.type === "info") { Icon = LuInfo; iconColor = "var(--accent2)"; }
+
+                                return (
+                                    <div key={n.id} className={`notif-item ${!n.read ? "notif-item--unread" : ""}`}>
+                                        <div className="notif-icon-wrap" style={{ color: iconColor }}>
+                                            <Icon size={16} />
+                                        </div>
+                                        <div className="notif-body">
+                                            <span className="notif-msg">{n.message}</span>
+                                            <span className="notif-time">{formatTimeAgo(n.timestamp)}</span>
+                                        </div>
+                                        {!n.read && <span className="notif-dot"></span>}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     )}
                 </div>
             ) : null}

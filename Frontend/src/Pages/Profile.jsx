@@ -130,8 +130,9 @@ function Profile() {
       {/* Logout confirmation modal */}
       <div className="pop" style={{ display: pop ? "flex" : "none" }}>
         <div className="pop-con">
-          <div className="bar"></div>
-          <div className="span"><LuLogOut color="red" size={30} /></div>
+          <div className="pop-icon">
+            <LuLogOut color="#ef4444" size={24} />
+          </div>
           <h1>Log Out</h1>
           <p>Are you sure you want to log out?</p>
           <div className="pop-btns">

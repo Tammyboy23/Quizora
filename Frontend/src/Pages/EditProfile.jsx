@@ -3,9 +3,10 @@ import { updateProfile } from "firebase/auth";
 import { auth } from "../config/firebase-config";
 import toast from "react-hot-toast";
 import { FaArrowLeft, FaPen, FaPerson } from "react-icons/fa6";
-import { LuSave, LuX, LuTriangleAlert } from "react-icons/lu";
+import { LuSave, LuX, LuTriangleAlert, LuSun, LuMoon } from "react-icons/lu";
 import { useAuth } from "../config/auth-context.jsx";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../config/ThemeContext";
 
 function EditProfile() {
   const { user } = useAuth();
@@ -31,9 +32,7 @@ function EditProfile() {
   const [difficulty, setDifficulty] = useState(
     localStorage.getItem("pref_difficulty") || "any"
   );
-  const [accent, setAccent] = useState(
-    localStorage.getItem("pref_accent") || "lightblue"
-  );
+  const { darkMode, toggleTheme } = useTheme();
 
   const [saving, setSaving] = useState(false);
 
@@ -89,7 +88,6 @@ function EditProfile() {
     // Save preferences
     localStorage.setItem("pref_timezone", timezone);
     localStorage.setItem("pref_difficulty", difficulty);
-    localStorage.setItem("pref_accent", accent);
 
     // Sync with Firebase
     if (user) {
@@ -114,7 +112,6 @@ function EditProfile() {
       "avatar",
       "pref_timezone",
       "pref_difficulty",
-      "pref_accent",
     ].forEach((k) => localStorage.removeItem(k));
     setUsername("Anonymous");
     setDisplayName("");
@@ -123,7 +120,6 @@ function EditProfile() {
     setAvatar(null);
     setTimezone("");
     setDifficulty("any");
-    setAccent("lightblue");
     toast.success("Profile reset");
     navigate("/profile");
   }
@@ -279,17 +275,17 @@ function EditProfile() {
             </div>
 
             <div className="edit-field">
-              <label className="edit-label">Accent Color</label>
-              <select
-                className="pref-select"
-                value={accent}
-                onChange={(e) => setAccent(e.target.value)}
-              >
-                <option value="lightblue">Light Blue</option>
-                <option value="blue">Blue</option>
-                <option value="green">Green</option>
-                <option value="orange">Orange</option>
-              </select>
+              <label className="edit-label">Theme</label>
+              <div className="edit-theme-toggle" onClick={toggleTheme}>
+                <div className="edit-theme-toggle-track">
+                  <div className={`edit-theme-toggle-thumb ${darkMode ? "dark" : "light"}`}>
+                    {darkMode ? <LuMoon size={14} /> : <LuSun size={14} />}
+                  </div>
+                </div>
+                <span className="edit-theme-toggle-label">
+                  {darkMode ? "Dark Mode" : "Light Mode"}
+                </span>
+              </div>
             </div>
           </div>
         </div>
