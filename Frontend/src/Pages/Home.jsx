@@ -1,8 +1,9 @@
 import {  AiFillFire } from "react-icons/ai";
 import Top from "./top";
 import {  FaBook, FaChartLine, FaStackExchange, FaTrophy } from "react-icons/fa";
-import { LuBell, LuBellDot, LuTrendingUp } from "react-icons/lu";
+import { LuBell, LuBellDot, LuMoon, LuSun, LuTrendingUp } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "../config/ThemeContext";
 import { getNotifications, markAllAsRead } from "../utils/notifications";
 
 function formatTimeAgo(timestamp) {
@@ -26,6 +27,8 @@ function Home(){
     const [notifications, setNotifications] = useState(() => getNotifications());
     const [created, setcreated] = useState([])
     const [open, setOpen] = useState(false);
+    const { darkMode, toggleTheme } = useTheme();
+
     const bellRef = useRef(null);
     const panelRef = useRef(null);
 
@@ -64,6 +67,14 @@ function Home(){
     return(
         <>
         <div className="notification-shell">
+            <button
+                className="notification-btn theme-toggle-btn"
+                onClick={toggleTheme}
+                aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+                type="button"
+            >
+                {darkMode ? <LuSun size={19} /> : <LuMoon size={19} />}
+            </button>
             <button
                 ref={bellRef}
                 className="notification-btn"
@@ -105,13 +116,13 @@ function Home(){
         <div className="dashboards">
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',
-                borderTop: '2px solid #6c63ff',
+                borderTop: '2px solid var(--accent)',
             }}>
                 <div className="board-top"><h3>Average</h3><span style={{
-                    background: '#22213d',
-                }}><LuTrendingUp size="20" color="#6c63ff" /></span></div>
+                    background: 'var(--surface3)',
+                }}><LuTrendingUp size="20" color="var(--accent)" /></span></div>
                 <h1 style={{
-                    color: '#6c63ff',
+                    color: 'var(--accent)',
                 }}>{average}%</h1>
             </div>
             <div className="board" style={{
@@ -119,7 +130,7 @@ function Home(){
                 borderTop: '2px solid #f87171'
             }}>
                 <div className="board-top"><h3>Streaks</h3> <span style={{
-                    background: '#32222a',
+                    background: 'var(--surface3)',
                 }}><AiFillFire  size="20" color="#f87171"/></span></div>
                 <h1 style={{
                     color: '#f87171',
@@ -130,7 +141,7 @@ function Home(){
                 borderTop: `2px solid hsl(150, 100%, 47%)`
             }}>
                 <div className="board-top"><h3>Quizes Created</h3><span style={{
-                    background: '#182c2c',
+                    background: 'var(--surface3)',
                 }}><FaBook size="20" color="hsl(150, 100%, 47%)"/> </span></div>
                 <h1 style={{
                     color: 'hsl(150, 100%, 47%)',
@@ -143,7 +154,7 @@ function Home(){
                 <div className="board-top">
                     <h3>Rankings</h3>
                     <span style={{
-                        background: '#332b1f',
+                        background: 'var(--surface3)',
                     }}><FaTrophy  size="20" color="orange"/></span>
                 </div>
                 <h1 style={{

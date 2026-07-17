@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
-import { FaUser, FaQq } from "react-icons/fa";
-import { LuCompass, LuCirclePlus, LuBookHeadphones, LuStar, LuSparkles } from "react-icons/lu";
+import { FaUser } from "react-icons/fa";
+import { LuCompass, LuCirclePlus, LuSparkles } from "react-icons/lu";
 import { MdDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../config/auth-context";
 
 function NavBar({ hidden }) {
   const location = useLocation();
-  const {user, isSignedin} = useAuth();
+  const { user } = useAuth();
 
   if (hidden || location.pathname === "/signup") return null;
 

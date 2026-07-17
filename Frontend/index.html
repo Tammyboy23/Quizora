@@ -5,6 +5,18 @@
     <link rel="icon" type="image/svg+xml" href="./src/assets/quizora.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quizora</title>
+    <script>
+      (function() {
+        var theme = localStorage.getItem('quizora-theme');
+        if (theme === 'light') {
+          document.documentElement.style.colorScheme = 'light';
+          document.body.dataset.theme = 'light';
+        } else {
+          document.documentElement.style.colorScheme = 'dark';
+          document.body.dataset.theme = 'dark';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

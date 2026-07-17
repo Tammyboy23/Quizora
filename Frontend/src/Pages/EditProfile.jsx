@@ -32,7 +32,7 @@ function EditProfile() {
     localStorage.getItem("pref_difficulty") || "any"
   );
   const [accent, setAccent] = useState(
-    localStorage.getItem("pref_accent") || "purple"
+    localStorage.getItem("pref_accent") || "lightblue"
   );
 
   const [saving, setSaving] = useState(false);
@@ -123,7 +123,7 @@ function EditProfile() {
     setAvatar(null);
     setTimezone("");
     setDifficulty("any");
-    setAccent("purple");
+    setAccent("lightblue");
     toast.success("Profile reset");
     navigate("/profile");
   }
@@ -285,7 +285,7 @@ function EditProfile() {
                 value={accent}
                 onChange={(e) => setAccent(e.target.value)}
               >
-                <option value="purple">Purple</option>
+                <option value="lightblue">Light Blue</option>
                 <option value="blue">Blue</option>
                 <option value="green">Green</option>
                 <option value="orange">Orange</option>
