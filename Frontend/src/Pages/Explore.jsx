@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaArrowRightSolid } from "react-icons/lia";
-import { LuBadgeAlert, LuBookCheck, LuBookImage, LuLayers, LuNewspaper, LuRefreshCcw, LuShieldQuestion } from "react-icons/lu";
+import { LuBadgeAlert, LuBookCheck, LuBookImage, LuLayers, LuLogIn, LuNewspaper, LuRefreshCcw, LuShieldQuestion } from "react-icons/lu";
 import { useAuth } from "../config/auth-context.jsx";
 import { ScaleLoader } from "react-spinners";
 
@@ -78,7 +78,7 @@ function Explore() {
         ) : !isSignedIn ? (
           <div className="need">
             <p>You Need to Sign In First</p>
-            <LuBadgeAlert size={50} color="red" />
+            <LuLogIn size={50} color="red" />
             <Link to="/signup">
               <button>SIGN IN</button>
             </Link>

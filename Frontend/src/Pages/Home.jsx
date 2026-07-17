@@ -72,7 +72,7 @@ function Home(){
                 aria-label="Toggle notifications"
                 type="button"
             >
-                {notifications.length === 0 ? <LuBell color="#facc15" size={22} /> : <LuBellDot color="#facc15" size={22} />}
+                {notifications.length === 0 ? <LuBell  size={22} /> : <LuBellDot size={22} />}
             </button>
             {open ? (
                 <div ref={panelRef} className="notifications">
@@ -136,38 +136,38 @@ function Home(){
             </div>
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',
-                borderTop: '2px solid #f87171'
+                borderTop: '2px solid var(--accent)'
             }}>
                 <div className="board-top"><h3>Streaks</h3> <span style={{
                     background: 'var(--surface3)',
-                }}><AiFillFire  size="20" color="#f87171"/></span></div>
+                }}><AiFillFire  size="20" color="var(--accent)"/></span></div>
                 <h1 style={{
-                    color: '#f87171',
+                    color: 'var(--accent)',
                 }}>2 Days</h1>
             </div>
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',
-                borderTop: `2px solid hsl(150, 100%, 47%)`
+                borderTop: `2px solid var(--accent)`
             }}>
                 <div className="board-top"><h3>Quizes Created</h3><span style={{
                     background: 'var(--surface3)',
-                }}><FaBook size="20" color="hsl(150, 100%, 47%)"/> </span></div>
+                }}><FaBook size="20" color="var(--accent)"/> </span></div>
                 <h1 style={{
-                    color: 'hsl(150, 100%, 47%)',
-                }}>{String(created.length)}Qz</h1>
+                    color: 'var(--accent)',
+                }}>{String(created.length)} Qz</h1>
             </div>
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',
-                borderTop: '2px solid orange'
+                borderTop: '2px solid var(--accent)'
             }}>
                 <div className="board-top">
                     <h3>Rankings</h3>
                     <span style={{
                         background: 'var(--surface3)',
-                    }}><FaTrophy  size="20" color="orange"/></span>
+                    }}><FaTrophy  size="20" color="var(--accent)"/></span>
                 </div>
                 <h1 style={{
-                    color: 'orange',
+                    color: 'var(--accent)',
                 }}>#1</h1>
             </div>
         </div>
