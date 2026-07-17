@@ -73,7 +73,7 @@ function Explore() {
         {load ? (
           <div className="load">
             <h1>Content Loading</h1>
-            <ScaleLoader size={30} color="#bd4dfe" />
+            <ScaleLoader size={30} color="#5da9ff" />
           </div>
         ) : !isSignedIn ? (
           <div className="need">

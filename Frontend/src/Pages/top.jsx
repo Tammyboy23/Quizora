@@ -34,12 +34,12 @@ function Top() {
       <div className="greet">
             <h2> Good {time}, <span>{user?.displayName || "Guest"}</span> </h2>
             <p style={{
-              background: `rgb(29, 20, 63)`,
-              border: '1px solid var(--accent)',
+              background: 'var(--accent)',
+              border: '1px solid rgba(255,255,255,0.035)',
               padding: '10px 20px ',
               width: 'fit-content',
               borderRadius: '40px',
-              color: '#7b7a7a',
+              color: 'var(--font)',
               fontSize: '0.8rem'
             }}><LuCalendar /> {new Date().toLocaleDateString('en-NG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'})}</p>
         </div>

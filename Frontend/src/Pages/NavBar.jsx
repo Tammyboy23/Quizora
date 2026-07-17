@@ -44,7 +44,7 @@ function NavBar({ hidden }) {
       {/* Desktop sidebar */}
       <div className="nav">
         <div className="logo">
-          <h1><img src="../assets/logo.png" alt="" /> QUIZORA</h1>
+          <img src="../assets/logo.png" alt="" /><h1>QUIZORA</h1>
         </div>
         {navLinks}
       </div>

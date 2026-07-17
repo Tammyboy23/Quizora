@@ -36,7 +36,7 @@ function Note(){
                 <Link to="/explore"><button><LuArrowLeft /> Back</button></Link>
                 <div className="loader">
                     <p>Loading in Progress</p>
-                    <p><ScaleLoader color="#bd4dfe" size={30}/></p>
+                    <p><ScaleLoader color="#5da9ff" size={30}/></p>
                 </div>
                 
             </div>

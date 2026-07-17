@@ -36,9 +36,9 @@
 }
 
 body[data-theme="light"] {
-  --bg: #f5f8ff;
+  --bg: #e2e4e8;
   --surface: #ffffff;
-  --surface2: #f2f6ff;
+  --surface2: #ecf2ff;
   --surface3: #e8f1ff;
   --border: #d8e6f8;
   --border2: #c8daf5;
@@ -920,7 +920,7 @@ body{
 }
 .greet span{
   font-family: rubik;
-  background: linear-gradient(to right, rgb(146, 6, 216) , rgb(199, 118, 253));
+  background: linear-gradient(to right, var(--accent) , var(--accent2));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1143,7 +1143,7 @@ body{
   border: 1px solid var(--border);
   border-radius: 24px;
   padding: 24px;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: 0 5px 32px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   font-family: outfit, sans-serif;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }

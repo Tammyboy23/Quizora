@@ -138,7 +138,7 @@ function Page({ onQuizModeChange }) {
     return (
       <div className="app">
         <div className="screen">
-          <h2>Loading Quiz <ScaleLoader color="#bd4dfe" size={30}/></h2>
+          <h2>Loading Quiz <ScaleLoader color="#5da9ff" size={30}/></h2>
           <div className="quiz-stats">Fetching questions from the server.</div>
         </div>
       </div>
