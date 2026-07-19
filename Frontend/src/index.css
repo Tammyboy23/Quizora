@@ -2816,6 +2816,7 @@ body{
 
 .board-top h3{
   color: #7070a0;
+  font-family: JetBrains Mono;
   font-size: 1rem;
   letter-spacing: 0.02em;
 }
@@ -3992,48 +3993,109 @@ form button:hover{
     padding: 10px 14px;
   }
 }
-.quick{
-  background: var(--card-bg);
-  padding: 10px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+.quick {
+  width: 100%;
   margin-top: 20px;
+  border-radius: 18px;
+  padding: 24px;
+  background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
 }
-.quick-btns{
+
+.quick h3 {
   display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: outfit;
+  letter-spacing: -0.01em;
+  margin: 0 0 20px 0;
 }
-.quick-btns button:hover{
-  background: var(--btn-hover);
+
+.quick h3 svg {
+  color: #7C9CFF;
+  width: 16px;
+  height: 16px;
 }
-.quick h3{
-  font-family: "outfit";
+
+.quick-btns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
 }
-.quick-btns h3{
-  color: var(--accent);
-}
-.quick-btns p{
-  font-family: "JetBrains Mono";
-}
-.quick-btns button span{
-  color: var(--accent);
-  font-size: 1.3rem;
-}
-.quick-btns button{
-  cursor: pointer;
+
+.quick-btns button {
   display: flex;
   flex-direction: column;
-  padding: 10px 20px;
-  gap: 10px;
-  border: 1px solid var(--border);
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
   border-radius: 12px;
-  background: var(--card-bg);
+  text-align: left;
+  cursor: pointer;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  font-family: rubik;
 }
-@media(max-width: 900px){
-.quick-btns{
-  display: grid;
-  gap: 7px;
-  grid-template-columns: repeat(3, 1fr);
+
+.quick-btns button:hover {
+  border-color: rgba(255,255,255,0.18);
 }
+
+.quick-btns button:focus-visible {
+  outline: 2px solid #7C9CFF;
+  outline-offset: 2px;
+}
+
+.quick-btns button:active {
+  background: linear-gradient(160deg, rgba(124,156,255,0.16), rgba(124,156,255,0.04));
+  border-color: rgba(124,156,255,0.45);
+  box-shadow: 0 0 0 1px rgba(124,156,255,0.13), 0 8px 24px -8px rgba(124,156,255,0.27);
+}
+
+.quick-btns button span {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(124,156,255,0.1);
+  border: 1px solid rgba(124,156,255,0.25);
+  transition: transform 0.2s ease;
+}
+
+.quick-btns button:hover span {
+  transform: scale(1.05);
+}
+
+.quick-btns button span svg {
+  width: 17px;
+  height: 17px;
+  color: #7C9CFF;
+}
+
+.quick-btns button h5 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Responsive */
+@media (max-width: 780px) {
+  .quick-btns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-btns {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

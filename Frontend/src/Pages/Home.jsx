@@ -122,46 +122,41 @@ function Home(){
                 </div>
             ) : null}
         </div>
-       <div className="explore-eyebrow">Dashboard</div>
         <Top/>
         <div className="home">
         <div className="dashboards">
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',
-                borderTop: '2px solid var(--accent)',
             }}>
                 <div className="board-top"><h3>Average</h3><span style={{
                     background: 'var(--surface3)',
                 }}><LuTrendingUp size="20" color="var(--accent)" /></span></div>
                 <h1 style={{
-                    color: 'var(--accent)',
+                    color: 'var(--font)',
                 }}>{average}%</h1>
             </div>
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',
-                borderTop: '2px solid var(--accent)'
             }}>
                 <div className="board-top"><h3>Streaks</h3> <span style={{
                     background: 'var(--surface3)',
                 }}><AiFillFire  size="20" color="var(--accent)"/></span></div>
                 <h1 style={{
-                    color: 'var(--accent)',
+                    color: 'var(--font)',
                 }}>2 Days</h1>
             </div>
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',
-                borderTop: `2px solid var(--accent)`
             }}>
                 <div className="board-top"><h3>Quizes Created</h3><span style={{
                     background: 'var(--surface3)',
                 }}><FaBook size="20" color="var(--accent)"/> </span></div>
                 <h1 style={{
-                    color: 'var(--accent)',
-                }}>{String(created.length)} Qz</h1>
+                    color: 'var(--font)',
+                }}>{String(created.length)}</h1>
             </div>
             <div className="board" style={{
                 border: '2px solid #4d4d4f43',
-                borderTop: '2px solid var(--accent)'
             }}>
                 <div className="board-top">
                     <h3>Rankings</h3>
@@ -170,18 +165,18 @@ function Home(){
                     }}><FaTrophy  size="20" color="var(--accent)"/></span>
                 </div>
                 <h1 style={{
-                    color: 'var(--accent)',
+                    color: 'var(--font)',
                 }}>#1</h1>
             </div>
         </div>
         <div className="quick">
             <h3>Quick Actions <LuSparkles /></h3>
             <div className="quick-btns">
-                <button onClick={() => navigate('/chat')}><span><FaRobot /></span> <p>AI Chat</p> </button>
-                <button onClick={() => navigate('/profile')}><span><LuSettings /></span> <p>Settings</p></button>
-                <button onClick={() => navigate('/create')}><span><LuBook /></span> <p>Lessons</p></button>
-                <button onClick={() => navigate('/create')}><span>< LuNewspaper/></span> <p>Quizes</p></button>
-                <button onClick={() => navigate('/explore')}><span><LuCompass /></span> <p>Explore</p></button>
+                <button onClick={() => navigate('/chat')}><span><FaRobot /></span> <h5>AI Chat</h5> </button>
+                <button onClick={() => navigate('/profile')}><span><LuSettings /></span> <h5>Settings</h5></button>
+                <button onClick={() => navigate('/create')}><span><LuBook /></span> <h5>Lessons</h5></button>
+                <button onClick={() => navigate('/create')}><span>< LuNewspaper/></span> <h5>Quizes</h5></button>
+                <button onClick={() => navigate('/explore')}><span><LuCompass /></span> <h5>Explore</h5></button>
             </div>
         </div>
         </div>
