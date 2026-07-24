@@ -1,11 +1,11 @@
 import {  AiFillFire } from "react-icons/ai";
 import Top from "./top";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import {  FaBook, FaChartLine, FaRobot, FaStackExchange, FaTrophy } from "react-icons/fa";
-import { LuBell, LuBellDot, LuCheck, LuTriangleAlert, LuInfo, LuX, LuTrendingUp, LuSpace, LuSparkle, LuSparkles, LuSettings, LuBook, LuPaperclip, LuSearch, LuCompass, LuNewspaper } from "react-icons/lu";
+import { Link, useNavigate } from "react-router-dom";
+import {  FaBook, FaChartLine, FaRobot, FaStackExchange, FaTrophy, FaBrain, FaRocket, FaGraduationCap } from "react-icons/fa";
+import { LuBell, LuBellDot, LuCheck, LuTriangleAlert, LuInfo, LuX, LuTrendingUp, LuSpace, LuSparkle, LuSparkles, LuSettings, LuBook, LuPaperclip, LuSearch, LuCompass, LuNewspaper, LuArrowRight, LuZap } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
 import { getNotifications, markAllAsRead } from "../utils/notifications";
+import { useAuth } from "../config/auth-context.jsx";
 
 function formatTimeAgo(timestamp) {
   if (!timestamp) return "";
@@ -29,6 +29,7 @@ function Home(){
     const [created, setcreated] = useState([])
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
+    const { isSignedIn, checkingAuth, user } = useAuth();
 
     const bellRef = useRef(null);
     const panelRef = useRef(null);
@@ -65,6 +66,114 @@ function Home(){
         return () => document.removeEventListener("mousedown", handlePointerDown);
     }, [open]);
 
+    if (checkingAuth) {
+      return (
+        <div className="landing-auth-loading">
+          <div className="landing-loading-spinner" />
+        </div>
+      );
+    }
+
+    // ── Not signed in → show landing page ──
+    if (!isSignedIn) {
+      return (
+        <div className="landing">
+          {/* ── Hero Section ── */}
+          <section className="landing-hero">
+            <div className="landing-hero-bg-glow" />
+            <div className="landing-hero-content">
+              <div className="landing-hero-badge">
+                <LuZap size={12} />
+                <span>The future of learning</span>
+              </div>
+              <h1 className="landing-hero-title">
+                Test your knowledge,
+                <br />
+                <span className="landing-hero-gradient">master your skills</span>
+              </h1>
+              <p className="landing-hero-subtitle">
+                Create custom quizzes, explore curated subjects, track your progress, and level up with AI-powered learning — all in one place.
+              </p>
+              <div className="landing-hero-actions">
+                <button className="landing-cta-btn" onClick={() => navigate('/signup')}>
+                  Get Started
+                  <LuArrowRight size={18} />
+                </button>
+                <button className="landing-secondary-btn" onClick={() => navigate('/explore')}>
+                  Explore Quizzes
+                </button>
+              </div>
+              <div className="landing-hero-stats">
+                <div className="landing-stat">
+                  <span className="landing-stat-num">50+</span>
+                  <span className="landing-stat-label">Quizzes</span>
+                </div>
+                <div className="landing-stat-divider" />
+                <div className="landing-stat">
+                  <span className="landing-stat-num">AI</span>
+                  <span className="landing-stat-label">Powered</span>
+                </div>
+                <div className="landing-stat-divider" />
+                <div className="landing-stat">
+                  <span className="landing-stat-num">100%</span>
+                  <span className="landing-stat-label">Free</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ── Features Section ── */}
+          <section className="landing-features">
+            <div className="landing-features-header">
+              <span className="landing-section-badge">Features</span>
+              <h2>Everything you need to learn better</h2>
+            </div>
+            <div className="landing-features-grid">
+              <div className="landing-feature-card">
+                <div className="landing-feature-icon" style={{ background: 'rgba(93, 169, 255, 0.12)', color: 'var(--accent)' }}>
+                  <FaBrain size={24} />
+                </div>
+                <h3>Smart Quizzes</h3>
+                <p>Create and take intelligent quizzes that adapt to your learning pace and help you retain information better.</p>
+              </div>
+              <div className="landing-feature-card">
+                <div className="landing-feature-icon" style={{ background: 'rgba(142, 209, 255, 0.12)', color: 'var(--accent2)' }}>
+                  <FaRocket size={24} />
+                </div>
+                <h3>AI Chat Assistant</h3>
+                <p>Get instant help from our AI assistant. Ask questions, get explanations, and deepen your understanding of any topic.</p>
+              </div>
+              <div className="landing-feature-card">
+                <div className="landing-feature-icon" style={{ background: 'rgba(34, 197, 94, 0.12)', color: 'var(--correct)' }}>
+                  <FaGraduationCap size={24} />
+                </div>
+                <h3>Track Progress</h3>
+                <p>Monitor your performance with detailed stats, streaks, and rankings. See how you stack up against others.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* ── CTA Section ── */}
+          <section className="landing-cta-section">
+            <div className="landing-cta-card">
+              <h2>Ready to start learning?</h2>
+              <p>Join Quizora today and unlock your full potential. It's free, fast, and fun.</p>
+              <button className="landing-cta-btn" onClick={() => navigate('/signup')}>
+                Get Started Now
+                <LuArrowRight size={18} />
+              </button>
+            </div>
+          </section>
+
+          {/* ── Footer ── */}
+          <footer className="landing-footer">
+            <p>© {new Date().getFullYear()} Quizora. Built with ❤️ for learners everywhere.</p>
+          </footer>
+        </div>
+      );
+    }
+
+    // ── Signed in → show dashboard ──
     return(
         <>
         <div className="notification-shell">
